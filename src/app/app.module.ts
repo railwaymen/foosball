@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
+import { GamePage } from '../pages/game/game';
 import { DataProvider } from '../providers/data/data';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { DataProvider } from '../providers/data/data';
     MyApp,
     HomePage,
     AddUserPage,
-    UserDetailPage
+    UserDetailPage,
+    GamePage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { DataProvider } from '../providers/data/data';
     MyApp,
     HomePage,
     AddUserPage,
-    UserDetailPage
+    UserDetailPage,
+    GamePage
   ],
   providers: [
     StatusBar,

@@ -7,13 +7,18 @@
       Selected: {{playerSize()}}
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="addUser()"><ion-icon name="add-circle"></ion-icon></button>
+      <button *ngIf="isTeamCompleted()" ion-button icon-only (click)="play()"><ion-icon name="play"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let user of users" (click)="addPlayer(user)">{{user.name}} {{isPlayer(user)}}</ion-item>
+    <ion-item *ngFor="let user of users" (click)="addPlayer(user)">
+      {{user.name}}
+      <ion-icon *ngIf="isPlayer(user)" name="shirt" [ngClass]="{'shirt-blue' : (findPlayer(user).team === 'blue'), 'shirt-red':(findPlayer(user).team === 'red')}"></ion-icon>
+      <ion-icon *ngIf="isDefender(user)" name="body"></ion-icon>
+      <ion-icon *ngIf="isAttacker(user)" name="football"></ion-icon>
+    </ion-item>
   </ion-list>
 </ion-content>
