@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ModalController, NavController } from 'ionic-angular';
 import { AddUserPage } from '../add-user/add-user';
-import { UserDetailPage } from '../user-detail/user-detail';
+// import { UserDetailPage } from '../user-detail/user-detail';
 import { DataProvider } from '../../providers/data/data';
+
+import _ from 'lodash';
 
 @Component({
   selector: 'page-home',
@@ -10,23 +12,26 @@ import { DataProvider } from '../../providers/data/data';
 })
 export class HomePage {
 
-  public users;
+  public users: Array<any>=[];
+  public players: Array<any>=[];
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: DataProvider) {
-    this.dataService.getData().then((users) => {
-      if(users){
-        this.users = users;
-      }
-    })
+    this.players = [];
+    // this.dataService.save([]);
+    // this.dataService.getData().then((users) => {
+    //   if(users){
+    //     this.users = users;
+    //   }
+    // })
   }
 
   ionViewDidLoad(){
-
     this.users = [
-      {name: 'User 1'},
-      {name: 'User 2'},
-      {name: 'User 3'}
+      {id: 1, name: 'User 1'},
+      {id: 2, name: 'User 2'},
+      {id: 3, name: 'User 3'}
     ];
+    this.players = [];
 
   }
 
@@ -47,10 +52,32 @@ export class HomePage {
     this.dataService.save(this.users);
   }
 
-  viewUser(user){
-    this.navCtrl.push(UserDetailPage, {
-        user: user
-      });
+  addPlayer(user){
+    if(this.isPlayer(user)){
+      this.removePlayer(user)
+    }else{
+      this.players.push(user);
+    }
   }
+
+  removePlayer(user){
+    _.remove(this.players, function(player) {
+      return player.id === user.id;
+    });
+  }
+
+  playerSize(){
+    return _.size(this.players);
+  }
+
+  isPlayer(user){
+    return !_.isEmpty(_.find(this.players, function(player){ return player.id === user.id; }));
+  }
+
+  // viewUser(user){
+  //   this.navCtrl.push(UserDetailPage, {
+  //       user: user
+  //     });
+  // }
 
 }

@@ -3,6 +3,9 @@
     <ion-title>
       Football players!
     </ion-title>
+    <ion-title text-center>
+      Selected: {{playerSize()}}
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="addUser()"><ion-icon name="add-circle"></ion-icon></button>
     </ion-buttons>
@@ -11,6 +14,6 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let user of users" (click)="viewUser(user)">{{user.name}}</ion-item>
+    <ion-item *ngFor="let user of users" (click)="addPlayer(user)">{{user.name}} {{isPlayer(user)}}</ion-item>
   </ion-list>
 </ion-content>
