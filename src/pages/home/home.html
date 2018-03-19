@@ -15,7 +15,7 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let user of users" (click)="addPlayer(user)">
-      {{user.name}}
+      {{user.name()}}
       <ion-icon *ngIf="isPlayer(user)" name="shirt" [ngClass]="{'shirt-blue' : (findPlayer(user).team === 'blue'), 'shirt-red':(findPlayer(user).team === 'red')}"></ion-icon>
       <ion-icon *ngIf="isDefender(user)" name="body"></ion-icon>
       <ion-icon *ngIf="isAttacker(user)" name="football"></ion-icon>

@@ -19,7 +19,7 @@
       <ion-col>
         <ion-list>
           <ion-item text-right *ngFor="let player of groupedPlayers().blue">
-            {{player.name}}
+            {{player.name()}}
             <ion-icon name="shirt" class="shirt-blue"></ion-icon>
             <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
             <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
@@ -31,7 +31,7 @@
       <ion-col>
         <ion-list>
           <ion-item text-left *ngFor="let player of groupedPlayers().red">
-            {{player.name}}
+            {{player.name()}}
             <ion-icon name="shirt" class="shirt-red"></ion-icon>
             <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
             <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>

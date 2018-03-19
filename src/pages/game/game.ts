@@ -22,7 +22,6 @@ export class GamePage {
   }
 
   ionViewDidLoad() {
-    console.log(this.score);
   }
 
   isFinish(){

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -11,6 +12,7 @@ import { AddUserPage } from '../pages/add-user/add-user';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { GamePage } from '../pages/game/game';
 import { DataProvider } from '../providers/data/data';
+import { UsersProvider } from '../providers/users/users';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { DataProvider } from '../providers/data/data';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -37,7 +40,8 @@ import { DataProvider } from '../providers/data/data';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    DataProvider,
+    UsersProvider
   ]
 })
 export class AppModule {}
