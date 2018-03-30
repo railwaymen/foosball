@@ -13,6 +13,7 @@ import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { GamePage } from '../pages/game/game';
 import { DataProvider } from '../providers/data/data';
 import { UsersProvider } from '../providers/users/users';
+import { GamesProvider } from '../providers/games/games';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { UsersProvider } from '../providers/users/users';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
-    UsersProvider
+    UsersProvider,
+    GamesProvider
   ]
 })
 export class AppModule {}

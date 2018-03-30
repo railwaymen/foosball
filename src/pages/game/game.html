@@ -8,6 +8,9 @@
 
   <ion-navbar>
     <ion-title>Game</ion-title>
+    <ion-buttons end>
+      <button *ngIf="isFinish()" ion-button (click)="save()">Save</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -18,7 +21,7 @@
     <ion-row>
       <ion-col>
         <ion-list>
-          <ion-item text-right *ngFor="let player of groupedPlayers().blue">
+          <ion-item text-right *ngFor="let player of groupedPlayers.blue">
             {{player.name()}}
             <ion-icon name="shirt" class="shirt-blue"></ion-icon>
             <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
@@ -30,7 +33,7 @@
       </ion-col>
       <ion-col>
         <ion-list>
-          <ion-item text-left *ngFor="let player of groupedPlayers().red">
+          <ion-item text-left *ngFor="let player of groupedPlayers.red">
             {{player.name()}}
             <ion-icon name="shirt" class="shirt-red"></ion-icon>
             <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>

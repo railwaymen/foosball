@@ -60,7 +60,7 @@ export class HomePage {
   // }
 
   play(){
-    this.navCtrl.push(GamePage, { players: this.players });
+    this.navCtrl.push(GamePage, { players: this.players })
   }
 
    saveUser(user){
@@ -131,6 +131,10 @@ export class HomePage {
   isAttacker(user){
     var player = this.findPlayer(user);
     return player && player.position == 'attacker'
+  }
+
+  resetTeams(){
+    this.players = [];
   }
 
   // viewUser(user){
