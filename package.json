@@ -38,7 +38,8 @@
     "sw-toolbox": "3.6.0",
     "underscore": "^1.8.3",
     "zone.js": "0.8.18",
-    "cordova-android": "~7.0.0"
+    "cordova-android": "~7.0.0",
+    "cordova-browser": "~5.0.3"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
@@ -54,7 +55,13 @@
       "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
+  },
+  "config": {
+    "ionic_aot_write_to_disk": true,
+    "ionic_optimization": "./config/optimization.config.js",
+    "ionic_webpack": "./config/webpack.config.js"
   }
 }

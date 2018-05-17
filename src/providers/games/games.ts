@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { ENV } from '@app/env'
 
 @Injectable()
 export class GamesProvider {
@@ -7,7 +8,7 @@ export class GamesProvider {
   endpoint: string;
 
   constructor(public http: Http) {
-    this.endpoint = 'http://localhost:3000/games';
+    this.endpoint = `${ENV.API_URL}/games`
   }
 
    save(params) {
