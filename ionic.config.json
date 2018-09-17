@@ -1,8 +1,7 @@
 {
   "name": "table-football",
-  "app_id": "",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular"
 }

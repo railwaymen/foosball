@@ -11,10 +11,12 @@ Mobile app to manage table football scores.
 Development mode
 ```
 ionic serve
+```
 
 Production mode
 ```
 ionic cordova build browser --prod
+```
 cordova run browser
 
 ## API
