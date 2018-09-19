@@ -8,7 +8,7 @@ export class GamesProvider {
   endpoint: string;
 
   constructor(public http: Http) {
-    this.endpoint = `${ENV.API_URL}/games`
+    this.endpoint = `${ENV.API_URL}/games.json`
   }
 
    save(params) {

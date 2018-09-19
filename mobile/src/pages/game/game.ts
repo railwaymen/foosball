@@ -35,16 +35,12 @@ export class GamePage {
 
   save(){
     this.gamesProvider.save({ "games": {
-      team_blue: [
-        { user_id: this.groupedPlayers.blue[0].id, position: this.groupedPlayers.blue[0].position },
-        { user_id: this.groupedPlayers.blue[1].id, position: this.groupedPlayers.blue[1].position }
-      ],
-      team_red: [
-        { user_id: this.groupedPlayers.red[0].id, position: this.groupedPlayers.red[0].position },
-        { user_id: this.groupedPlayers.red[1].id, position: this.groupedPlayers.red[1].position }
-      ],
-      score_blue: this.score.blue,
-      score_red: this.score.red
+      red_attacker_id: this.groupedPlayers.red[0].id,
+      red_defender_id: this.groupedPlayers.red[1].id,
+      blue_attacker_id: this.groupedPlayers.blue[0].id,
+      blue_defender_id: this.groupedPlayers.blue[1].id,
+      blue_score: this.score.blue,
+      red_score: this.score.red
     } })
     .then(data => {
       this.navCtrl.getPrevious().instance.resetTeams();

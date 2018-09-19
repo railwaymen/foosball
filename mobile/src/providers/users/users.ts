@@ -11,7 +11,7 @@ export class UsersProvider {
   endpoint: string;
 
   constructor(public http: Http) {
-    this.endpoint = `${ENV.API_URL}/users`
+    this.endpoint = `${ENV.API_URL}/players.json`
   }
 
   load(params={}) {
