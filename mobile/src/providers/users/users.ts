@@ -15,17 +15,18 @@ export class UsersProvider {
   }
 
   load(params={}) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this.http.get(`${this.endpoint}`)
         .map(res => res.json())
         .subscribe(data => {
+          this.data = [];
           for (let row of data) {
             this.data.push(
               new UserModel(row.id, row.first_name, row.last_name)
             )
           }
           resolve(this.data);
-        });
+        }, err => reject(err));
     });
   }
 

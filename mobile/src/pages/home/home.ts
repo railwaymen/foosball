@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController } from 'ionic-angular';
+import { ModalController, NavController, LoadingController, AlertController } from 'ionic-angular';
 import { GamePage } from '../game/game';
-// import { AddUserPage } from '../add-user/add-user';
-// import { UserDetailPage } from '../user-detail/user-detail';
 import { UsersProvider } from '../../providers/users/users';
 import { DataProvider } from '../../providers/data/data';
 
@@ -20,20 +18,45 @@ export class HomePage {
   public teams: Array<any>=[];
   public positions: Array<any>=[];
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: DataProvider, public usersProvider: UsersProvider) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, public dataService: DataProvider, public usersProvider: UsersProvider) {
     this.players = [];
     this.users = [];
-    this.loadUsers().then(usersData => {
-      this.users = usersData;
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
     });
-    // this.dataService.save([]);
-    // this.dataService.getData().then((users) => {
-    //   if(users){
-    //     this.users = users;
-    //   }
-    // })
+    loading.present();
+    this.fetchUsers().then(() => {
+      loading.dismiss();
+    }).catch(error => {
+      this.presentAlert();
+      loading.dismiss();
+    });
     this.teams = ['blue', 'red']
     this.positions = ['defender', 'attacker']
+  }
+
+  fetchUsers() {
+    return this.loadUsers().then(usersData => {
+      this.users = usersData;
+    });
+  }
+
+  doRefresh(refresher) {
+    this.fetchUsers().then(() => {
+      refresher.complete();
+    }).catch(error => {
+      refresher.complete();
+      this.presentAlert();
+    });
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Oops',
+      subTitle: 'Something went wrong',
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
   ionViewDidLoad(){
@@ -47,25 +70,8 @@ export class HomePage {
     });
   }
 
-  // addUser(){
-  //   let addModal = this.modalCtrl.create(AddUserPage);
-
-  //   addModal.onDidDismiss((user) => {
-  //     if(user){
-  //       this.saveUser(user);
-  //     }
-  //   });
-
-  //   addModal.present();
-  // }
-
   play(){
     this.navCtrl.push(GamePage, { players: this.players })
-  }
-
-   saveUser(user){
-    this.users.push(user);
-    this.dataService.save(this.users);
   }
 
   isTeamCompleted(){
@@ -136,11 +142,4 @@ export class HomePage {
   resetTeams(){
     this.players = [];
   }
-
-  // viewUser(user){
-  //   this.navCtrl.push(UserDetailPage, {
-  //       user: user
-  //     });
-  // }
-
 }
