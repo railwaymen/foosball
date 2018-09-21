@@ -12,11 +12,11 @@ export class GamesProvider {
   }
 
    save(params) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this.http.post(`${this.endpoint}`, params)
         .subscribe(data => {
           resolve(data);
-        });
+        }, err => reject(err));
     });
   }
 
