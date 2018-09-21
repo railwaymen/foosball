@@ -13,7 +13,7 @@ import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { UserDetailPageModule } from '../pages/user-detail/user-detail.module';
 import { GamePage } from '../pages/game/game';
 import { GamePageModule } from '../pages/game/game.module';
-import { DataProvider } from '../providers/data/data';
+import { TokenProvider } from '../providers/token/token';
 import { UsersProvider } from '../providers/users/users';
 import { GamesProvider } from '../providers/games/games';
 
@@ -43,7 +43,7 @@ import { GamesProvider } from '../providers/games/games';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider,
+    TokenProvider,
     UsersProvider,
     GamesProvider
   ]
