@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { GamePage } from '../game/game';
 import { UsersProvider } from '../../providers/users/users';
-import { DataProvider } from '../../providers/data/data';
 
 import _ from 'lodash';
 
@@ -18,7 +17,7 @@ export class HomePage {
   public teams: Array<any>=[];
   public positions: Array<any>=[];
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, public dataService: DataProvider, public usersProvider: UsersProvider) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, public usersProvider: UsersProvider) {
     this.players = [];
     this.users = [];
     let loading = this.loadingCtrl.create({
