@@ -14,6 +14,8 @@ export class GamePage {
   public score: any;
   public players: Array<any>=[];
   public groupedPlayers: any;
+  public startedAt: Date;
+  public finishedAt: Date;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
@@ -22,6 +24,7 @@ export class GamePage {
     }
     this.players = navParams.get('players');
     this.groupedPlayers = _.groupBy(this.players, 'team');
+    this.startedAt = new Date();
   }
 
   isFinish(){
@@ -44,6 +47,7 @@ export class GamePage {
 
 
   save(){
+    this.finishedAt = new Date();
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
@@ -54,7 +58,9 @@ export class GamePage {
       blue_attacker_id: this.groupedPlayers.blue[0].id,
       blue_defender_id: this.groupedPlayers.blue[1].id,
       blue_score: this.score.blue,
-      red_score: this.score.red
+      red_score: this.score.red,
+      started_at: this.startedAt,
+      finished_at: this.finishedAt
     } })
     .then(data => {
       loading.dismiss();
