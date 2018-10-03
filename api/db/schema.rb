@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_114212) do
+ActiveRecord::Schema.define(version: 2018_09_28_100738) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2018_09_21_114212) do
     t.integer "blue_score", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
     t.index ["blue_attacker_id"], name: "index_games_on_blue_attacker_id"
     t.index ["blue_defender_id"], name: "index_games_on_blue_defender_id"
     t.index ["red_attacker_id"], name: "index_games_on_red_attacker_id"
