@@ -43,13 +43,13 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col text-right (click)="goal('blue')">
+      <ion-col text-right (tap)="goal('blue')" (swipe)="swipeBlue($event)">
         <span class="score blue">{{score.blue}}</span>
       </ion-col>
       <ion-col col-auto>
         <span class="score">:</span>
       </ion-col>
-      <ion-col text-left (click)="goal('red')">
+      <ion-col text-left (tap)="goal('red')" (swipe)="swipeRed($event)">
         <span class="score red">{{score.red}}</span>
       </ion-col>
     </ion-row>

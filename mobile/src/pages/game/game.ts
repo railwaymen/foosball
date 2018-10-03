@@ -36,13 +36,32 @@ export class GamePage {
       this.score[team] = this.score[team] + 1;
   }
 
-   presentAlert() {
+  reduceGoal(team){
+    if(this.score[team] > 0)
+      this.score[team] = this.score[team] - 1;
+  }
+
+  presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'Oops',
       subTitle: 'Something went wrong',
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  swipeBlue(event){
+    if(event.direction == 2)
+      this.reduceGoal('blue');
+    if(event.direction == 4)
+      this.goal('blue');
+  }
+
+  swipeRed(event){
+    if(event.direction == 2)
+      this.goal('red');
+    if(event.direction == 4)
+      this.reduceGoal('red');
   }
 
 
