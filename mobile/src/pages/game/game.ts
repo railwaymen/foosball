@@ -16,6 +16,8 @@ export class GamePage {
   public groupedPlayers: any;
   public startedAt: Date;
   public finishedAt: Date;
+  public goals: Object;
+  public goalsHistory: Object;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
@@ -25,20 +27,36 @@ export class GamePage {
     this.players = navParams.get('players');
     this.groupedPlayers = _.groupBy(this.players, 'team');
     this.startedAt = new Date();
+    this.goals = {};
+    _.each(this.players, player =>
+      this.goals[player.id] = 0
+     );
+    this.goalsHistory = {blue: [], red: []};
   }
 
   isFinish(){
     return this.score.blue > 9 || this.score.red > 9
   }
 
-  goal(team){
-    if(!this.isFinish())
-      this.score[team] = this.score[team] + 1;
+  goalsFor(player){
+    return this.goals[player.id];
+  }
+
+  playerGoal(playerId){
+    if(!this.isFinish()){
+      let player = _.find(this.players, {id: playerId});
+      this.goals[player.id] += 1;
+      this.goalsHistory[player.team].push(player.id);
+      this.score[player.team] = this.score[player.team] + 1;
+    }
   }
 
   reduceGoal(team){
-    if(this.score[team] > 0)
+    if(this.score[team] > 0){
+      let playerId = this.goalsHistory[team].pop();
+      if(playerId) this.goals[playerId] -= 1;
       this.score[team] = this.score[team] - 1;
+    }
   }
 
   presentAlert() {
@@ -53,13 +71,9 @@ export class GamePage {
   swipeBlue(event){
     if(event.direction == 2)
       this.reduceGoal('blue');
-    if(event.direction == 4)
-      this.goal('blue');
   }
 
   swipeRed(event){
-    if(event.direction == 2)
-      this.goal('red');
     if(event.direction == 4)
       this.reduceGoal('red');
   }

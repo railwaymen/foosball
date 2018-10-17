@@ -22,10 +22,15 @@
       <ion-col>
         <ion-list>
           <ion-item text-right *ngFor="let player of groupedPlayers.blue">
-            {{player.name()}}
-            <ion-icon name="shirt" class="shirt-blue"></ion-icon>
-            <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
-            <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
+            <ion-card (touchstart)="playerGoal(player.id)">
+              <ion-card-content>
+                ({{goalsFor(player)}})
+                {{player.name()}}
+                <ion-icon name="shirt" class="shirt-blue"></ion-icon>
+                <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
+                <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
+              </ion-card-content>
+            </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>
@@ -34,22 +39,27 @@
       <ion-col>
         <ion-list>
           <ion-item text-left *ngFor="let player of groupedPlayers.red">
-            {{player.name()}}
-            <ion-icon name="shirt" class="shirt-red"></ion-icon>
-            <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
-            <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
+            <ion-card (touchstart)="playerGoal(player.id)">
+              <ion-card-content>
+                ({{goalsFor(player)}})
+                {{player.name()}}
+                <ion-icon name="shirt" class="shirt-red"></ion-icon>
+                <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
+                <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
+              </ion-card-content>
+            </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col text-right (tap)="goal('blue')" (swipe)="swipeBlue($event)">
+      <ion-col text-right (swipe)="swipeBlue($event)">
         <span class="score blue">{{score.blue}}</span>
       </ion-col>
       <ion-col col-auto>
         <span class="score">:</span>
       </ion-col>
-      <ion-col text-left (tap)="goal('red')" (swipe)="swipeRed($event)">
+      <ion-col text-left (swipe)="swipeRed($event)">
         <span class="score red">{{score.red}}</span>
       </ion-col>
     </ion-row>
