@@ -21,11 +21,8 @@ cordova run browser
 
 ## API
 
-* For development it is possible to use local api
+* To use this application, you need to run api first. Also please copy environment config file and fill properly.
 ```
-cp -i db-seed.json db.json
-json-server --watch db.json
-
 ## ENVIRONMENT
 
 *development
