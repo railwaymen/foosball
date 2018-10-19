@@ -23,4 +23,67 @@ page-game {
   .shirt-red{
     color: red;
   }
+  .grid {
+    padding-top: 50px;
+    height: 100%;
+    .row, .col {
+      height: 100%;
+    }
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      justify-content: space-around;
+    }
+    .list {
+      ion-item {
+        background: none;
+      }
+      .own-goal, .goal {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        z-index: 0;
+        border: none;
+        width: 100%;
+        div {
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: calc(100% - 25px);
+          width: 100%;
+          color: white;
+          font-size: 20px;
+          font-weight: 800;
+          margin: 0 20px;
+          width: 100%;
+        }
+      }
+      .own-goal div {
+        background: red;
+      }
+      .goal div {
+        background: green;
+      }
+      .item-inner {
+        border: none;
+      }
+      .card {
+        margin: 5px auto;
+        max-width: 100%;
+        padding: 15px 10px;
+        .card-content {
+          text-align: center;
+        }
+      }
+    }
+    .score {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      font-size: 30vh;
+    }
+  }
 }

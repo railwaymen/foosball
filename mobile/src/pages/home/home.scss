@@ -13,3 +13,6 @@ page-home {
   }
 }
 
+.card {
+  @extend .swipe-card
+}

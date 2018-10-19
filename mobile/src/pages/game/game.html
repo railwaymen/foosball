@@ -15,14 +15,16 @@
 
 </ion-header>
 
-
-<ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-list>
-          <ion-item text-right *ngFor="let player of groupedPlayers.blue">
-            <ion-card (touchstart)="playerGoal(player.id)">
+<ion-grid>
+  <ion-row>
+    <ion-col text-right (swipe)="swipeBlue($event)">
+      <span class="score blue">{{score.blue}}</span>
+    </ion-col>
+    <ion-col col-6 class = "user-list">
+      <ion-list>
+        <ion-item-sliding text-right *ngFor="let player of groupedPlayers.blue" ng-model-options="{ debounce: 5000 }" (ionDrag)="onDrag($event)" >
+           <ion-item [attr.data-player]="player.id" [attr.data-team]="player.team">
+            <ion-card>
               <ion-card-content>
                 ({{goalsFor(player)}})
                 {{player.name()}}
@@ -32,14 +34,18 @@
               </ion-card-content>
             </ion-card>
           </ion-item>
-        </ion-list>
-      </ion-col>
-      <ion-col col-auto>
-      </ion-col>
-      <ion-col>
-        <ion-list>
-          <ion-item text-left *ngFor="let player of groupedPlayers.red">
-            <ion-card (touchstart)="playerGoal(player.id)">
+          <ion-item-options side="left" class="own-goal">
+            <div>Own Goal :(</div>
+          </ion-item-options>
+          <ion-item-options side="right" class="goal">
+            <div>Goal!</div>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      <ion-list>
+        <ion-item-sliding text-right *ngFor="let player of groupedPlayers.red" (ionDrag)="onDrag($event)">
+          <ion-item [attr.data-player]="player.id" [attr.data-team]="player.team">
+            <ion-card>
               <ion-card-content>
                 ({{goalsFor(player)}})
                 {{player.name()}}
@@ -49,19 +55,18 @@
               </ion-card-content>
             </ion-card>
           </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-right (swipe)="swipeBlue($event)">
-        <span class="score blue">{{score.blue}}</span>
-      </ion-col>
-      <ion-col col-auto>
-        <span class="score">:</span>
-      </ion-col>
-      <ion-col text-left (swipe)="swipeRed($event)">
-        <span class="score red">{{score.red}}</span>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+          <ion-item-options side="left" class="goal">
+            <div>Goal!</div>
+          </ion-item-options>
+          <ion-item-options side="right" class="own-goal">
+            <div>Own Goal :(</div>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-col>
+    <ion-col text-left (swipe)="swipeRed($event)">
+      <span class="score red">{{score.red}}</span>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
