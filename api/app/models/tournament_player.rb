@@ -4,5 +4,6 @@ class TournamentPlayer < ApplicationRecord
   belongs_to :player
   belongs_to :tournament
 
-  validates :player_id, uniqueness: { scope: [:tournament_id] }
+  validates :player_id, presence: true, uniqueness: { scope: [:tournament_id] }
+  validates :tournament_id, presence: true
 end
