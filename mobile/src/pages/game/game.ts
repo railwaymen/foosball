@@ -42,21 +42,22 @@ export class GamePage {
     return this.goals[player.id];
   }
 
-  playerGoal(playerId){
-    if(!this.isFinish()){
-      let player = _.find(this.players, {id: playerId});
-      this.goals[player.id] += 1;
-      this.goalsHistory[player.team].push(player.id);
-      this.score[player.team] = this.score[player.team] + 1;
-    }
+
+  playerGoal(playerId, own:boolean = false){
+    if (this.isFinish()) return;
+
+    const player = _.find(this.players, {id: playerId});
+    this.goals[player.id] = own ? --this.goals[player.id] : ++this.goals[player.id];
+    this.setGoalsOnTeam(player, own);
   }
 
-  reduceGoal(team){
-    if(this.score[team] > 0){
-      let playerId = this.goalsHistory[team].pop();
-      if(playerId) this.goals[playerId] -= 1;
-      this.score[team] = this.score[team] - 1;
+  setGoalsOnTeam(player, own:boolean = false){
+    if (!own) {
+      this.goalsHistory[player.team].push(player.id);
+    } else {
+      this.goalsHistory[player.team].pop();
     }
+    this.score[player.team] = own ? --this.score[player.team] : ++this.score[player.team]
   }
 
   presentAlert() {
@@ -67,17 +68,6 @@ export class GamePage {
     });
     alert.present();
   }
-
-  swipeBlue(event){
-    if(event.direction == 2)
-      this.reduceGoal('blue');
-  }
-
-  swipeRed(event){
-    if(event.direction == 4)
-      this.reduceGoal('red');
-  }
-
 
   save(){
     this.finishedAt = new Date();

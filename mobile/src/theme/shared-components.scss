@@ -1,0 +1,22 @@
+.swipe-card {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: none;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 10px;
+  margin: 10px auto;
+  ion-card-content {
+    color: rgba(0,0,0,0.65);
+  }
+}
+
+.arrow {
+  div {
+    background: rgba(0,0,0,0.2);
+    width: 10px;
+    height: 40px;
+  }
+  div:first-of-type {
+    transform: rotate(45deg);
+  }
+}

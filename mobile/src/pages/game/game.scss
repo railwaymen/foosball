@@ -23,4 +23,31 @@ page-game {
   .shirt-red{
     color: red;
   }
+  .grid {
+    margin-top: 50px;
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      justify-content: space-around;
+    }
+    .list {
+      .item-inner {
+        border: none;
+      }
+      .card {
+        padding: 15px 10px;
+        .card-content {
+          text-align: center;
+        }
+      }
+    }
+    .score {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      font-size: 30vh;
+    }
+  }
 }
