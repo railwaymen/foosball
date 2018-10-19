@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { GamesProvider } from '../../providers/games/games';
+import { IPlayer, TeamDictionary } from './game-types';
 
 import _ from 'lodash';
 
@@ -9,29 +10,30 @@ import _ from 'lodash';
   selector: 'page-game',
   templateUrl: 'game.html',
 })
+
 export class GamePage {
 
-  public score: any;
-  public players: Array<any>=[];
-  public groupedPlayers: any;
+  public score: TeamDictionary<number>;
+  public players: IPlayer[] = [];
+  public groupedPlayers: TeamDictionary<IPlayer[]>;
   public startedAt: Date;
   public finishedAt: Date;
-  public goals: Object;
-  public goalsHistory: Object;
+  public goals: { [index: number]: number };
+  public goalsHistory: TeamDictionary<number[]>;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
-      'blue': 0,
-      'red': 0
-    }
+      blue: 0,
+      red: 0,
+    };
     this.players = navParams.get('players');
-    this.groupedPlayers = _.groupBy(this.players, 'team');
+    this.groupedPlayers = _.groupBy(this.players, (x) => x.team) as TeamDictionary<IPlayer[]>;
     this.startedAt = new Date();
     this.goals = {};
     _.each(this.players, player =>
       this.goals[player.id] = 0
-     );
-    this.goalsHistory = {blue: [], red: []};
+    );
+    this.goalsHistory = { blue: [], red: [] };
   }
 
   isFinish(){
@@ -42,9 +44,9 @@ export class GamePage {
     return this.goals[player.id];
   }
 
-  playerGoal(playerId){
-    if(!this.isFinish()){
-      let player = _.find(this.players, {id: playerId});
+  playerGoal(playerId) {
+    if (!this.isFinish()) {
+      const player = _.find(this.players, (x) => x.id) as IPlayer;
       this.goals[player.id] += 1;
       this.goalsHistory[player.team].push(player.id);
       this.score[player.team] = this.score[player.team] + 1;
