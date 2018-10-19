@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_140000) do
   create_table "tournaments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", default: ""
   end
 
 end

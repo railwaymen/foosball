@@ -1,0 +1,14 @@
+<ion-menu [content]="content" persistent="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Tournaments</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button *ngFor="let entry of entries" ion-item color="{{entry == selected ? 'primary' : ''}}" (touchstart)="onMenuChange(entry)">
+        {{entry}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>

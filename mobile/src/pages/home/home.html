@@ -1,5 +1,9 @@
+<side-menu [content]="content" selected="Players"></side-menu>
 <ion-header>
   <ion-navbar color="secondary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
     <ion-title>
       Football players!
     </ion-title>
@@ -14,7 +18,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content #content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"

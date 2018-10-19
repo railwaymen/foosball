@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { TournamentsPage } from '../pages/tournaments/tournaments';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { UserDetailPageModule } from '../pages/user-detail/user-detail.module';
@@ -15,8 +16,11 @@ import { GamePage } from '../pages/game/game';
 import { GamePageModule } from '../pages/game/game.module';
 import { GroupsPage } from '../pages/groups/groups';
 import { GroupsPageModule } from '../pages/groups/groups.module';
+import { SideMenu } from '../pages/side-menu/side-menu';
+import { SideMenuModule } from '../pages/side-menu/side-menu.module';
 import { TokenProvider } from '../providers/token/token';
 import { UsersProvider } from '../providers/users/users';
+import { TournamentsProvider } from '../providers/tournaments/tournaments';
 import { GamesProvider } from '../providers/games/games';
 import { GroupsProvider } from '../providers/groups/groups';
 
@@ -24,7 +28,8 @@ import { GroupsProvider } from '../providers/groups/groups';
   declarations: [
     MyApp,
     HomePage,
-    AddUserPage
+    AddUserPage,
+    TournamentsPage
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,7 @@ import { GroupsProvider } from '../providers/groups/groups';
     GamePageModule,
     GroupsPageModule,
     UserDetailPageModule,
+    SideMenuModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -42,7 +48,9 @@ import { GroupsProvider } from '../providers/groups/groups';
     AddUserPage,
     UserDetailPage,
     GamePage,
-    GroupsPage
+    GroupsPage,
+    TournamentsPage,
+    SideMenu,
   ],
   providers: [
     StatusBar,
@@ -51,7 +59,9 @@ import { GroupsProvider } from '../providers/groups/groups';
     TokenProvider,
     UsersProvider,
     GamesProvider,
-    GroupsProvider
+    GroupsProvider,
+    TournamentsProvider,
+    GamesProvider
   ]
 })
 export class AppModule {}
