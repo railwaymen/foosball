@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_100738) do
+ActiveRecord::Schema.define(version: 2018_10_19_110045) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -40,6 +40,22 @@ ActiveRecord::Schema.define(version: 2018_09_28_100738) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tournament_players", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "tournament_id", null: false
+    t.string "position", default: "attacker", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id", "tournament_id"], name: "index_tournament_players_on_player_id_and_tournament_id", unique: true
+    t.index ["player_id"], name: "index_tournament_players_on_player_id"
+    t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
+  end
+
+  create_table "tournaments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
