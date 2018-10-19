@@ -15,6 +15,7 @@ npm-debug.log*
 db.json
 src/environments/environment.*
 !src/environments/environment.example.ts
+!src/environments/environment.interface.ts
 
 .idea/
 .sourcemaps/
