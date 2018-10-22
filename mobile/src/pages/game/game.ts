@@ -46,7 +46,7 @@ export class GamePage {
 
   playerGoal(playerId) {
     if (!this.isFinish()) {
-      const player = _.find(this.players, (x) => x.id) as IPlayer;
+      const player = _.find(this.players, (x) => x.id === playerId);
       this.goals[player.id] += 1;
       this.goalsHistory[player.team].push(player.id);
       this.score[player.team] = this.score[player.team] + 1;
