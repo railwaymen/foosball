@@ -17,7 +17,7 @@
 
 <ion-grid>
   <ion-row>
-    <ion-col text-right (swipe)="swipeBlue($event)">
+    <ion-col text-right>
       <span class="score blue">{{score.blue}}</span>
     </ion-col>
     <ion-col col-6 class = "user-list">
@@ -48,7 +48,7 @@
         </ion-item>
       </ion-list>
     </ion-col>
-    <ion-col text-left (swipe)="swipeRed($event)">
+    <ion-col text-left>
       <span class="score red">{{score.red}}</span>
     </ion-col>
   </ion-row>

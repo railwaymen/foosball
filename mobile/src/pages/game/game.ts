@@ -43,21 +43,38 @@ export class GamePage {
   }
 
 
-  playerGoal(playerId, own:boolean = false){
+  playerGoal(playerId, own:boolean = false): void {
     if (this.isFinish()) return;
 
     const player = _.find(this.players, {id: playerId});
-    this.goals[player.id] = own ? --this.goals[player.id] : ++this.goals[player.id];
-    this.setGoalsOnTeam(player, own);
+    if (own) {
+      this.reduceGoal(player.team);
+      this.addGoal(player, true);
+    } else {
+      this.addGoal(player);
+      this.goals[player.id]++;
+    }
   }
 
-  setGoalsOnTeam(player, own:boolean = false){
-    if (!own) {
+  addGoal(player, own: boolean = false): void {
+    const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
+    this.score[teamToAddPoint]++;
       this.goalsHistory[player.team].push(player.id);
-    } else {
-      this.goalsHistory[player.team].pop();
+  }
+
+  getOpponentTeamName(team: string): string {
+    const teams: string[] = Object.keys(this.score);
+    const result = teams.find((teamName) => {
+      return teamName !== team;
+    });
+    return result;
     }
-    this.score[player.team] = own ? --this.score[player.team] : ++this.score[player.team]
+
+  reduceGoal(team: string): void {
+    const playerId = this.goalsHistory[team].pop();
+    this.goals[playerId] -= 1;
+    if (this.score[team] < 1) return;
+    this.score[team] -= 1;
   }
 
   presentAlert() {
