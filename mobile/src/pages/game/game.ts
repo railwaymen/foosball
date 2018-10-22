@@ -10,7 +10,7 @@ import _ from 'lodash';
   templateUrl: 'game.html',
 })
 export class GamePage {
-  readonly gameUpTp: Number=10;
+  readonly gameUpTo: Number=10;
 
   public score: any;
   public players: Array<any>=[];
@@ -36,7 +36,7 @@ export class GamePage {
   }
 
   isFinish(){
-    return this.score.blue >= this.gameUpTp || this.score.red >= this.gameUpTp
+    return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo
   }
 
   goalsFor(player){
