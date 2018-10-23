@@ -4,7 +4,7 @@ class Game < ApplicationRecord
   belongs_to :blue_attacker, class_name: 'Player'
   belongs_to :blue_defender, class_name: 'Player'
 
-  has_many :games_players
+  has_many :games_players, dependent: :destroy
 
   accepts_nested_attributes_for :games_players, reject_if: :all_blank
 end
