@@ -10,6 +10,7 @@ import _ from 'lodash';
   templateUrl: 'game.html',
 })
 export class GamePage {
+  readonly gameUpTo: Number=10;
 
   public score: any;
   public players: Array<any>=[];
@@ -35,7 +36,7 @@ export class GamePage {
   }
 
   isFinish(){
-    return this.score.blue > 9 || this.score.red > 9
+    return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo
   }
 
   goalsFor(player){
@@ -78,6 +79,20 @@ export class GamePage {
       this.reduceGoal('red');
   }
 
+  playersResult(){
+    let results = [];
+    _.each(this.players, player => {
+      let oppositeTeam = (player.team == 'red') ? 'blue' : 'red';
+      results.push({
+        player_id: player.id,
+        team: player.team,
+        position: player.position,
+        gols: _.countBy(this.goalsHistory[player.team])[player.id] || 0,
+        own_gols: _.countBy(this.goalsHistory[oppositeTeam])[player.id] || 0
+      })
+    });
+    return results;
+  }
 
   save(){
     this.finishedAt = new Date();
@@ -93,7 +108,8 @@ export class GamePage {
       blue_score: this.score.blue,
       red_score: this.score.red,
       started_at: this.startedAt,
-      finished_at: this.finishedAt
+      finished_at: this.finishedAt,
+      games_players_attributes: this.playersResult()
     } })
     .then(data => {
       loading.dismiss();
