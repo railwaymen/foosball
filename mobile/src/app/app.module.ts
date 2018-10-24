@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TournamentsPage } from '../pages/tournaments/tournaments';
+import { PlayersPage } from '../pages/players/players';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { UserDetailPageModule } from '../pages/user-detail/user-detail.module';
@@ -29,7 +30,8 @@ import { GroupsProvider } from '../providers/groups/groups';
     MyApp,
     HomePage,
     AddUserPage,
-    TournamentsPage
+    TournamentsPage,
+    PlayersPage
   ],
   imports: [
     BrowserModule,

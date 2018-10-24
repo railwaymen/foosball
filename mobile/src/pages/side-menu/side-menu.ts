@@ -1,8 +1,6 @@
-import { Component, Input, ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { App, NavController } from 'ionic-angular';
 import { MenuController } from 'ionic-angular';
-import { HomePage } from '../home/home';
-import { TournamentsPage } from '../tournaments/tournaments';
 
 @Component({
   selector: 'side-menu',
@@ -10,29 +8,19 @@ import { TournamentsPage } from '../tournaments/tournaments';
 })
 export class SideMenu {
   @Input() selected: string;
+  @Output() handleMenuChange = new EventEmitter<string>();
   @Input() content: any;
+  @Input() entries: any;
   constructor(public navCtrl: NavController, public menuController: MenuController, public app: App) {
     this.menuController.enable(true)
     this.onMenuChange = this.onMenuChange.bind(this)
   }
 
-  get entries() {
-    return ['Players', 'Tournaments'];
-  }
-
-  onMenuChange(entry) : void {
+  onMenuChange(entry : string) : void {
     if (entry === this.selected) {
       return;
     }
-    this.menuController.enable(false)
-    if (entry === 'Players') {
-      this.menuController.enable(false)
-      this.navCtrl.push(HomePage)
-    } else {
-      this.menuController.enable(false)
-      this.navCtrl.push(TournamentsPage)
-    }
-
+    this.handleMenuChange.emit(entry);
   }
 
 }

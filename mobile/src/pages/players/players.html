@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Football players!
+    </ion-title>
+    <ion-title text-center>
+      Selected: {{playerSize()}}
+    </ion-title>
+    <ion-buttons end>
+      <button class="start-game-button" *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()">Play<ion-icon name="play"></ion-icon></button>
+      <button *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()"><ion-icon name="play"></ion-icon></button>
+      <button ion-button icon-only (touchstart)="showGroups()">Groups</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid text-center>
+    <ion-row>
+      <ion-col col-4 *ngFor="let user of users" (touchstart)="addPlayer(user)">
+        <ion-card>
+            <ion-card-content>
+              {{user.name()}}
+              <ion-icon *ngIf="isPlayer(user)" name="shirt" [ngClass]="{'shirt-blue' : (findPlayer(user).team === 'blue'), 'shirt-red':(findPlayer(user).team === 'red')}"></ion-icon>
+              <ion-icon *ngIf="isDefender(user)" name="body"></ion-icon>
+              <ion-icon *ngIf="isAttacker(user)" name="football"></ion-icon>
+            </ion-card-content>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { TournamentsProvider } from '../../providers/tournaments/tournaments';
 
-import _ from 'lodash';
-
 @Component({
   selector: 'page-tournaments',
   templateUrl: 'tournaments.html',
