@@ -1,5 +1,5 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { IonicPage, NavParams, LoadingController, AlertController, ViewController, ItemSliding } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController, ItemSliding } from 'ionic-angular';
 import { GamesProvider } from '../../providers/games/games';
 import _ from 'lodash';
 
@@ -22,7 +22,7 @@ export class GamePage {
   public goalsHistory: Object;
   public scoreFreezed: boolean = false;
 
-  constructor(public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
       'blue': 0,
       'red': 0
