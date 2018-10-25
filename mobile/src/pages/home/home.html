@@ -8,6 +8,8 @@
     </ion-title>
     <ion-buttons end>
       <button class="start-game-button" *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()">Play<ion-icon name="play"></ion-icon></button>
+      <button *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()"><ion-icon name="play"></ion-icon></button>
+      <button ion-button icon-only (touchstart)="showGroups()">Groups</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>

@@ -1,0 +1,69 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Groups</ion-title>
+    <ion-buttons end>
+      <button *ngIf="isCompleted()" ion-button icon-only (touchstart)="play()"><ion-icon name="play"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-grid text-center>
+    <ion-row *ngFor="let group of groupsProvider.data">
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-12>
+                Group {{group.name}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-7>
+                Players
+              </ion-col>
+              <ion-col col-1>
+                Pld
+              </ion-col>
+              <ion-col col-1>
+                GF
+              </ion-col>
+              <ion-col col-1>
+                GA
+              </ion-col>
+              <ion-col col-1>
+                GD
+              </ion-col>
+              <ion-col col-1>
+                Pts
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let team of group.teams" (touchstart)="addTeam(team, group)">
+              <ion-col col-7>
+                {{team.attacker_first_name}} {{team.attacker_last_name}} & {{team.defender_first_name}} {{team.defender_last_name}}
+                <ion-icon *ngIf="isTeamSelected(team)" name="shirt"></ion-icon>
+              </ion-col>
+              <ion-col col-1>
+                {{team.played}}
+              </ion-col>
+              <ion-col col-1>
+                {{team.goals_for}}
+              </ion-col>
+              <ion-col col-1>
+                {{team.goals_against}}
+              </ion-col>
+              <ion-col col-1>
+                {{team.goal_difference}}
+              </ion-col>
+              <ion-col col-1>
+                {{team.points}}
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

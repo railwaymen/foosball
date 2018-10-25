@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_22_093418) do
+ActiveRecord::Schema.define(version: 2018_10_25_085434) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -30,8 +30,10 @@ ActiveRecord::Schema.define(version: 2018_10_22_093418) do
     t.datetime "updated_at", null: false
     t.datetime "started_at"
     t.datetime "finished_at"
+    t.integer "group_id"
     t.index ["blue_attacker_id"], name: "index_games_on_blue_attacker_id"
     t.index ["blue_defender_id"], name: "index_games_on_blue_defender_id"
+    t.index ["group_id"], name: "index_games_on_group_id"
     t.index ["red_attacker_id"], name: "index_games_on_red_attacker_id"
     t.index ["red_defender_id"], name: "index_games_on_red_defender_id"
   end
@@ -47,6 +49,29 @@ ActiveRecord::Schema.define(version: 2018_10_22_093418) do
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_games_players_on_game_id"
     t.index ["player_id"], name: "index_games_players_on_player_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.integer "tournament_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "tournament_id"], name: "index_groups_on_name_and_tournament_id", unique: true
+    t.index ["tournament_id"], name: "index_groups_on_tournament_id"
+  end
+
+  create_table "groups_teams", force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "group_id", null: false
+    t.integer "points", default: 0, null: false
+    t.integer "goal_difference", default: 0, null: false
+    t.integer "goals_against", default: 0, null: false
+    t.integer "goals_for", default: 0, null: false
+    t.integer "played", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_groups_teams_on_group_id"
+    t.index ["team_id"], name: "index_groups_teams_on_team_id"
   end
 
   create_table "players", force: :cascade do |t|
