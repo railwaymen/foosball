@@ -43,7 +43,7 @@
             <ion-row *ngFor="let team of group.teams" (touchstart)="addTeam(team, group)">
               <ion-col col-7>
                 {{team.attacker_first_name}} {{team.attacker_last_name}} & {{team.defender_first_name}} {{team.defender_last_name}}
-                <ion-icon *ngIf="isTeamSelected(team)" name="shirt" [ngClass]="shirt-red"></ion-icon>
+                <ion-icon *ngIf="isTeamSelected(team)" name="shirt"></ion-icon>
               </ion-col>
               <ion-col col-1>
                 {{team.played}}
