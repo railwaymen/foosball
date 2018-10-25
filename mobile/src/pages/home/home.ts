@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { GamePage } from '../game/game';
+import { GroupsPage } from '../groups/groups';
 import { UsersProvider } from '../../providers/users/users';
 
 import _ from 'lodash';
@@ -71,6 +72,10 @@ export class HomePage {
 
   play(){
     this.navCtrl.push(GamePage, { players: this.players })
+  }
+
+  showGroups(){
+    this.navCtrl.push(GroupsPage, { players: this.players });
   }
 
   isTeamCompleted(){

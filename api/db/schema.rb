@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2018_10_22_151244) do
     t.integer "goal_difference", default: 0, null: false
     t.integer "goals_against", default: 0, null: false
     t.integer "goals_for", default: 0, null: false
+    t.integer "played", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_groups_teams_on_group_id"

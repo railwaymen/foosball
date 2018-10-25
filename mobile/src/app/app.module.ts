@@ -13,9 +13,12 @@ import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { UserDetailPageModule } from '../pages/user-detail/user-detail.module';
 import { GamePage } from '../pages/game/game';
 import { GamePageModule } from '../pages/game/game.module';
+import { GroupsPage } from '../pages/groups/groups';
+import { GroupsPageModule } from '../pages/groups/groups.module';
 import { TokenProvider } from '../providers/token/token';
 import { UsersProvider } from '../providers/users/users';
 import { GamesProvider } from '../providers/games/games';
+import { GroupsProvider } from '../providers/groups/groups';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { GamesProvider } from '../providers/games/games';
     BrowserModule,
     HttpModule,
     GamePageModule,
+    GroupsPageModule,
     UserDetailPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -37,7 +41,8 @@ import { GamesProvider } from '../providers/games/games';
     HomePage,
     AddUserPage,
     UserDetailPage,
-    GamePage
+    GamePage,
+    GroupsPage
   ],
   providers: [
     StatusBar,
@@ -45,7 +50,8 @@ import { GamesProvider } from '../providers/games/games';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TokenProvider,
     UsersProvider,
-    GamesProvider
+    GamesProvider,
+    GroupsProvider
   ]
 })
 export class AppModule {}

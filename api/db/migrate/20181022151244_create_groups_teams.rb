@@ -7,6 +7,7 @@ class CreateGroupsTeams < ActiveRecord::Migration[5.2]
       t.integer :goal_difference, null: false, default: 0
       t.integer :goals_against, null: false, default: 0
       t.integer :goals_for, null: false, default: 0
+      t.integer :played, null: false, default: 0
       t.timestamps null: false
     end
   end
