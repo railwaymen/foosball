@@ -20,14 +20,17 @@
     <ion-col text-right (swipe)="swipeBlue($event)">
       <span class="score blue">{{score.blue}}</span>
     </ion-col>
-    <ion-col col-6 class = "user-list">
+    <ion-col #usersList col-6 class = "user-list">
       <ion-list>
         <ion-item-sliding text-right *ngFor="let player of groupedPlayers.blue" ng-model-options="{ debounce: 5000 }" (ionDrag)="onDrag($event)" >
            <ion-item [attr.data-player]="player.id" [attr.data-team]="player.team">
             <ion-card>
               <ion-card-content>
                 <ion-icon (tap)="playerGoal(player.id)" name="arrow-dropleft-circle"></ion-icon>
-                ({{goalsFor(player)}})
+                <ion-icon class="player-score">
+                  <div>{{getPositivePlayerGoals(player)}}</div>
+                  <div class="player-own-score">{{getSpecificPlayerGoalsCount(player, true)}}</div>
+                </ion-icon>
                 {{player.name()}}
                 <ion-icon name="shirt" class="shirt-blue"></ion-icon>
                 <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
@@ -51,7 +54,10 @@
             <ion-card>
               <ion-card-content>
                 <ion-icon (tap)="playerGoal(player.id, true)" name="arrow-dropleft"></ion-icon>
-                ({{goalsFor(player)}})
+                <ion-icon class="player-score">
+                  <div>{{getPositivePlayerGoals(player)}}</div>
+                  <div class="player-own-score">{{getSpecificPlayerGoalsCount(player, true)}}</div>
+                </ion-icon>
                 {{player.name()}}
                 <ion-icon name="shirt" class="shirt-red"></ion-icon>
                 <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>

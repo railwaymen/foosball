@@ -1,6 +1,7 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController, ItemSliding } from 'ionic-angular';
 import { GamesProvider } from '../../providers/games/games';
+import { IPlayerData, IGameHistory, IPlayer } from './game.interfaces';
 import _ from 'lodash';
 
 @IonicPage()
@@ -11,22 +12,28 @@ import _ from 'lodash';
 
 export class GamePage {
   @ViewChildren(ItemSliding) usernameNode: QueryList<ItemSliding>;
+  @ViewChild('usersList') UserList : ElementRef;
+  readonly gameUpTo: number=10;
+
   public score: any;
   public players: Array<any>=[];
   public groupedPlayers: any;
   public startedAt: Date;
   public finishedAt: Date;
   public goals: Object;
-  public goalsHistory: Object;
+  public goalsHistory: IGameHistory;
   public scoreFreezed: boolean = false;
   public groupId: number;
-  public gameUpTo: number;
+  public leaderGoalsCount: number;
+  public leader: number;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
       'blue': 0,
       'red': 0
     }
+    this.leader;
+    this.leaderGoalsCount = 0;
     this.players = navParams.get('players');
     this.groupId = navParams.get('groupId');
     this.gameUpTo = this.groupId == null ? 10 : 7;
@@ -36,7 +43,14 @@ export class GamePage {
     _.each(this.players, player =>
       this.goals[player.id] = 0
      );
-    this.goalsHistory = {blue: [], red: []};
+    this.goalsHistory = {
+      blue: [],
+      red: [],
+      own: {
+        blue: [],
+        red: []
+      }
+    };
   }
   ngAfterViewInit() {
     this.initializeObserver();
@@ -58,16 +72,12 @@ export class GamePage {
   }
 
   handleMutation(mutation: MutationRecord, element: any): void {
-    interface IPlayer {
-      team: string,
-      player: string
-    }
     if (!mutation || !mutation.oldValue) return
     const translate3dFirstVal: RegExpMatchArray = mutation.oldValue.match(/(\(.\d{2,})/g);
     if (!translate3dFirstVal) return;
     const position: number = parseInt(translate3dFirstVal[0].split('(')[1]);
     const maxValue: number = element.offsetWidth;
-    const playerProps: IPlayer = element.dataset;
+    const playerProps: IPlayerData = element.dataset;
 
     if (!element.getAttribute('style').length) {
       this.scoreFreezed = false;
@@ -84,12 +94,49 @@ export class GamePage {
     }
   }
 
-  isFinish(){
+  setCurrentLeader(): void {
+    const nodesToDecorate = this.UserList.nativeElement.getElementsByClassName('item');
+    for(const node of nodesToDecorate) {
+      const playerProps: IPlayerData = node.dataset;
+      const playerGoals: number = this.getSpecificPlayerGoalsCount({ id: parseInt(playerProps.player), team: playerProps.team});
+      const playerOwnGoals: number = this.getSpecificPlayerGoalsCount({ id: parseInt(playerProps.player), team: playerProps.team}, true);
+      if (playerGoals - playerOwnGoals > this.leaderGoalsCount) {
+        this.leaderGoalsCount = playerGoals;
+        this.leader = parseInt(playerProps.player);
+      }
+    }
+    this.restyleNodes();
+  }
+  restyleNodes() {
+    const dataNodes = this.UserList.nativeElement.getElementsByClassName('item');
+    for(const node of dataNodes) {
+      const playerProps: IPlayerData = node.dataset;
+      if (parseInt(playerProps.player) === this.leader) {
+        node.getElementsByClassName('card')[0].style.borderBottom = '10px solid yellow';
+      } else {
+        node.getElementsByClassName('card')[0].style.borderBottom = '1px solid rgba(0,0,0,0.2)';
+      }
+    }
+  }
+  isFinish(): boolean {
     return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo
   }
 
-  goalsFor(player){
+  getAllPlayerGoalsCount(player: IPlayer): number {
     return this.goals[player.id];
+  }
+
+  getSpecificPlayerGoalsCount(player, own: boolean = false): number {
+    let result = 0;
+    const ownGoalsStorage: Array<number> = own ? this.goalsHistory.own[player.team] : this.goalsHistory[player.team];
+    ownGoalsStorage.forEach(element => {
+      if (element === player.id) result++;
+    });
+    return result;
+  }
+
+  getPositivePlayerGoals(player: IPlayer): number {
+    return this.goals[player.id] - this.getSpecificPlayerGoalsCount(player, true);
   }
 
   playerGoal(playerId, own:boolean = false): void {
@@ -98,11 +145,16 @@ export class GamePage {
     const player = _.find(this.players, {id: playerId});
     this.addGoal(player, own);
     this.goals[player.id]++;
+    this.setCurrentLeader();
   }
 
-  addGoal(player, own: boolean = false): void {
+  addGoal(player: IPlayer, own: boolean = false): void {
     const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
     this.score[teamToAddPoint]++;
+    if (own) {
+      this.goalsHistory.own[player.team].push(player.id);
+      return;
+    }
     this.goalsHistory[player.team].push(player.id);
   }
 

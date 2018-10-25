@@ -6,6 +6,7 @@ page-game {
     margin: 0;
     width: 100%;
   }
+
   .card-content {
     display:  flex;
     align-items:  center;
@@ -22,16 +23,43 @@ page-game {
       }
     }
   }
-  ion-item[data-team^=blue] ion-icon[name^=arrow]{
-    color: color(team-blue);
-    &[name^=arrow-dropright] {
-      color: color(team-red);
+  .player-score {
+    position: absolute;
+    left: 23%;
+    div {
+      font-size: 45px;
+    }
+    .player-own-score {
+      opacity: 0.6;
+      font-size: 22.5px;
     }
   }
-  ion-item[data-team^=red] ion-icon[name^=arrow]{
-    color: color(team-red);
-    &[name^=arrow-dropleft] {
+  ion-item[data-team^=blue] {
+    ion-icon[name^=arrow]{
       color: color(team-blue);
+      &[name^=arrow-dropright] {
+        color: color(team-red);
+      }
+    }
+    .player-score {
+      color: color(team-blue);
+      .player-own-score {
+        color: color(team-red);
+      }
+    }
+  }
+  ion-item[data-team^=red] {
+    ion-icon[name^=arrow]{
+      color: color(team-red);
+      &[name^=arrow-dropleft] {
+        color: color(team-blue);
+      }
+    }
+    .player-score {
+      color: color(team-red);
+      .player-own-score {
+        color: color(team-blue);
+      }
     }
   }
 
@@ -109,6 +137,7 @@ page-game {
         border: none;
       }
       .card {
+        @extend .swipe-card;
         margin: 0 auto;
         max-width: 100%;
         padding: 15px 10px;
