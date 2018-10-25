@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
+import { Component, QueryList, ViewChildren } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController, ItemSliding } from 'ionic-angular';
 import { GamesProvider } from '../../providers/games/games';
-
 import _ from 'lodash';
 
 @IonicPage()
@@ -9,7 +8,9 @@ import _ from 'lodash';
   selector: 'page-game',
   templateUrl: 'game.html',
 })
+
 export class GamePage {
+  @ViewChildren(ItemSliding) usernameNode: QueryList<ItemSliding>;
   readonly gameUpTo: Number=10;
 
   public score: any;
@@ -19,6 +20,7 @@ export class GamePage {
   public finishedAt: Date;
   public goals: Object;
   public goalsHistory: Object;
+  public scoreFreezed: boolean = false;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
@@ -34,6 +36,51 @@ export class GamePage {
      );
     this.goalsHistory = {blue: [], red: []};
   }
+  ngAfterViewInit() {
+    this.initializeObserver();
+  }
+
+  initializeObserver(): void {
+    const nodesToObserve: Array<ItemSliding> = this.usernameNode.toArray();
+    nodesToObserve.forEach((node) => {
+      const targetItem: Node = node.item._elementRef.nativeElement;
+      const observer: MutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => this.handleMutation(mutation, targetItem));
+      });
+      observer.observe(targetItem, {
+        attributes: true,
+        attributeOldValue: true,
+        attributeFilter: ['style']
+      });
+    });
+  }
+
+  handleMutation(mutation: MutationRecord, element: any): void {
+    interface IPlayer {
+      team: string,
+      player: string
+    }
+    if (!mutation || !mutation.oldValue) return
+    const translate3dFirstVal: RegExpMatchArray = mutation.oldValue.match(/(\(.\d{2,})/g);
+    if (!translate3dFirstVal) return;
+    const position: number = parseInt(translate3dFirstVal[0].split('(')[1]);
+    const maxValue: number = element.offsetWidth;
+    const playerProps: IPlayer = element.dataset;
+
+    if (!element.getAttribute('style').length) {
+      this.scoreFreezed = false;
+    }
+    if ((position === maxValue
+      || position === -maxValue)
+      && !this.scoreFreezed) {
+      if (playerProps.team === 'blue') {
+        this.playerGoal(parseInt(playerProps.player), position > 0);
+      } else {
+        this.playerGoal(parseInt(playerProps.player), position < 0);
+      }
+      this.scoreFreezed = true;
+    }
+  }
 
   isFinish(){
     return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo
@@ -43,21 +90,51 @@ export class GamePage {
     return this.goals[player.id];
   }
 
-  playerGoal(playerId){
-    if(!this.isFinish()){
-      let player = _.find(this.players, {id: playerId});
-      this.goals[player.id] += 1;
-      this.goalsHistory[player.team].push(player.id);
-      this.score[player.team] = this.score[player.team] + 1;
-    }
+  playerGoal(playerId, own:boolean = false): void {
+    if (this.isFinish()) return;
+
+    const player = _.find(this.players, {id: playerId});
+    this.addGoal(player, own);
+    this.goals[player.id]++;
   }
 
-  reduceGoal(team){
-    if(this.score[team] > 0){
-      let playerId = this.goalsHistory[team].pop();
-      if(playerId) this.goals[playerId] -= 1;
-      this.score[team] = this.score[team] - 1;
-    }
+  addGoal(player, own: boolean = false): void {
+    const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
+    this.score[teamToAddPoint]++;
+    this.goalsHistory[player.team].push(player.id);
+  }
+
+  getOpponentTeamName(team: string): string {
+    // const teams: string[] = Object.keys(this.score);
+    // const result = teams.find((teamName) => {
+    //   return teamName !== team;
+    // });
+    // return result;
+
+    return team === 'blue' ? 'red' : 'blue';
+  }
+
+  reduceGoal(team: string): void {
+    const playerId = this.goalsHistory[team].pop();
+    this.goals[playerId] -= 1;
+    if (this.score[team] < 1) return;
+    this.score[team] -= 1;
+  }
+
+  onDrag(item: ItemSliding): void {
+    setTimeout(() => {
+      item.close();
+      return;
+    }, 2000);
+  }
+
+  swipeBlue(event){
+    if (event.direction != 2) return;
+    this.reduceGoal('blue');
+  }
+   swipeRed(event){
+    if (event.direction != 4) return;
+    this.reduceGoal('red');
   }
 
   presentAlert() {
@@ -67,16 +144,6 @@ export class GamePage {
       buttons: ['Ok']
     });
     alert.present();
-  }
-
-  swipeBlue(event){
-    if(event.direction == 2)
-      this.reduceGoal('blue');
-  }
-
-  swipeRed(event){
-    if(event.direction == 4)
-      this.reduceGoal('red');
   }
 
   playersResult(){
