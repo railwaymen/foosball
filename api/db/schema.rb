@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_135302) do
+ActiveRecord::Schema.define(version: 2018_10_25_140000) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -80,6 +80,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_135302) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "elo_rating", default: 1200, null: false
+    t.integer "elo_rating_defender", default: 1200, null: false
+    t.integer "elo_rating_attacker", default: 1200, null: false
   end
 
   create_table "teams", force: :cascade do |t|

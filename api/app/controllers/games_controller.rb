@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.create!(game_params)
     UpdateGroupPointsService.new(@game).call if @game.group_id.present?
+    RatingService.new(@game).call
     respond_with @game
   end
 
