@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_085434) do
+ActiveRecord::Schema.define(version: 2018_10_25_135302) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -84,10 +84,10 @@ ActiveRecord::Schema.define(version: 2018_10_25_085434) do
 
   create_table "teams", force: :cascade do |t|
     t.integer "tournament_id", null: false
-    t.integer "attacker_id"
-    t.integer "defender_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "attacker_id"
+    t.integer "defender_id"
     t.index ["attacker_id"], name: "index_teams_on_attacker_id"
     t.index ["defender_id"], name: "index_teams_on_defender_id"
     t.index ["tournament_id"], name: "index_teams_on_tournament_id"
