@@ -11,8 +11,6 @@ import _ from 'lodash';
 
 export class GamePage {
   @ViewChildren(ItemSliding) usernameNode: QueryList<ItemSliding>;
-  readonly gameUpTo: number=10;
-
   public score: any;
   public players: Array<any>=[];
   public groupedPlayers: any;
@@ -22,6 +20,7 @@ export class GamePage {
   public goalsHistory: Object;
   public scoreFreezed: boolean = false;
   public groupId: number;
+  public gameUpTo: number;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
@@ -30,6 +29,7 @@ export class GamePage {
     }
     this.players = navParams.get('players');
     this.groupId = navParams.get('groupId');
+    this.gameUpTo = this.groupId == null ? 10 : 7;
     this.groupedPlayers = _.groupBy(this.players, 'team');
     this.startedAt = new Date();
     this.goals = {};
