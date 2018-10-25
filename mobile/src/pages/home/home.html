@@ -7,7 +7,7 @@
       Selected: {{playerSize()}}
     </ion-title>
     <ion-buttons end>
-      <button *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()"><ion-icon name="play"></ion-icon></button>
+      <button class="start-game-button" *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()">Play<ion-icon name="play"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>

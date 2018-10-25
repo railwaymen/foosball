@@ -20,3 +20,39 @@
     transform: rotate(45deg);
   }
 }
+.custom-header {
+  &:after {
+    background-image: none;
+    display: none;
+  }
+  .toolbar-background {
+    background: none;
+  }
+}
+.shirt-blue, .shirt-red {
+  position: absolute;
+  opacity: 0.2;
+  font-size: 9em;
+  transform: rotate(-20deg);
+  left: 63%;
+  top: 2%;
+}
+.start-game-button {
+  height: 40px;
+  width: 120px;
+  border-radius: 5px;
+  background: linear-gradient(55deg, #f40661 0%,#ffa950 100%);
+  span {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 800;
+    ion-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:before {
+        font-size: 20px;
+      }
+    }
+  }
+}

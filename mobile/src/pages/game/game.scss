@@ -4,24 +4,51 @@ page-game {
   }
   .list-md{
     margin: 0;
+    width: 100%;
   }
-  .card-content{
+  .card-content {
+    display:  flex;
+    align-items:  center;
+    justify-content: center;
     font-size: 1.8rem;
+    width: 100%;
+    ion-icon[name^=arrow] {
+      font-size: 2em;
+      &[name^=arrow-dropright] {
+        margin-left: auto;
+      }
+      &[name^=arrow-dropleft] {
+        margin-right: auto;
+      }
+    }
   }
+  ion-item[data-team^=blue] ion-icon[name^=arrow]{
+    color: color(team-blue);
+    &[name^=arrow-dropright] {
+      color: color(team-red);
+    }
+  }
+  ion-item[data-team^=red] ion-icon[name^=arrow]{
+    color: color(team-red);
+    &[name^=arrow-dropleft] {
+      color: color(team-blue);
+    }
+  }
+
   .score{
     font-size: 40vw;
   }
   .blue{
-    color: blue;
+    color: color(team-blue);
   }
   .red{
-    color: red;
+    color: color(team-red);
   }
   .shirt-blue{
-    color: blue;
+    color: color(team-blue);
   }
   .shirt-red{
-    color: red;
+    color: color(team-red);
   }
   .grid {
     padding-top: 50px;
@@ -29,16 +56,28 @@ page-game {
     .row, .col {
       height: 100%;
     }
+    .row {
+      .col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
     .user-list {
       display: flex;
       flex-direction: column;
       justify-content: center;
       justify-content: space-around;
+      width: 100%;
     }
     .list {
-      ion-item {
+      ion-item, ion-item-sliding {
         background: none;
       }
+      ion-item-sliding {
+        margin-top: 20px;
+      }
+
       .own-goal, .goal {
         height: 100%;
         display: flex;
@@ -70,7 +109,7 @@ page-game {
         border: none;
       }
       .card {
-        margin: 5px auto;
+        margin: 0 auto;
         max-width: 100%;
         padding: 15px 10px;
         .card-content {
@@ -84,6 +123,11 @@ page-game {
       align-items: center;
       justify-content: center;
       font-size: 30vh;
+      border-radius: 5%;
+      height: 60%;
+      width: 90%;
+      border: 1px solid gainsboro;
+      background: #fff;
     }
   }
 }

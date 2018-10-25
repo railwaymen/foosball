@@ -1,9 +1,27 @@
 page-home {
+  ion-header {
+    &:after {
+      background-image: none;
+      display: none;
+    }
+    ion-navbar {
+      div.toolbar-background.toolbar-background-md {
+        background: #333333;
+      }
+    }
+    .toolbar-content {
+      ion-title {
+        display: inline-block;
+        width: auto;
+      }
+    }
+  }
+
   .shirt-blue{
-    color: blue;
+    color: color(team-blue);
   }
   .shirt-red{
-    color: red;
+    color: color(team-red);
   }
   .card-md{
     margin: 0;
@@ -11,8 +29,64 @@ page-home {
   .card-content{
     font-size: 1.8rem;
   }
+  .start-game-button {
+    height: 40px;
+    width: 120px;
+    border-radius: 5px;
+    background: linear-gradient(55deg, #f40661 0%,#ffa950 100%);
+    span {
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      ion-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:before {
+          font-size: 20px;
+        }
+      }
+    }
+  }
 }
-
-.card {
-  @extend .swipe-card
-}
+  .card {
+    @extend .swipe-card;
+  }
+  .grid {
+    padding: 50px 0;
+    height: 100%;
+    ion-row {
+      height: 100%;
+      ion-col, ion-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ion-col ion-card {
+        height: 100%;
+      }
+      ion-col {
+        overflow: hidden;
+        padding-bottom: 0;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .grid {
+      padding: 0;
+      height: auto;
+      .row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        ion-col, ion-card {
+          width: 100%;
+          max-width: 100%;
+          max-height: 75px;
+        }
+      }
+    }
+  }
