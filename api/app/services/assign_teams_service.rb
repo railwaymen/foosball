@@ -10,7 +10,7 @@ class AssignTeamsService
                                      .partition(&:attacker?)
 
     attackers.zip(defenders).map do |attacker, defender|
-      tournament.teams.create!(attacker: attacker, defender: defender)
+      tournament.teams.create!(attacker: attacker.player, defender: defender.player)
     end
   end
 end
