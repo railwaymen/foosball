@@ -70,4 +70,8 @@ export class GroupsPage {
     defender['position'] = 'defender'
     this.players.push(defender)
   }
+
+  resetTeams(){
+    this.selectedTeams = [];
+  }
 }
