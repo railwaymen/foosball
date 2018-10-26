@@ -1,5 +1,5 @@
 class UpdateGroupPointsService
-  GAME_UP_TO = 10
+  GAME_UP_TO = 7
 
   def initialize(game)
     @game = game
