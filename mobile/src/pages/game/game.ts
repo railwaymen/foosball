@@ -103,16 +103,10 @@ export class GamePage {
   addGoal(player, own: boolean = false): void {
     const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
     this.score[teamToAddPoint]++;
-    this.goalsHistory[player.team].push(player.id);
+    this.goalsHistory[teamToAddPoint].push(player.id);
   }
 
   getOpponentTeamName(team: string): string {
-    // const teams: string[] = Object.keys(this.score);
-    // const result = teams.find((teamName) => {
-    //   return teamName !== team;
-    // });
-    // return result;
-
     return team === 'blue' ? 'red' : 'blue';
   }
 
@@ -151,7 +145,7 @@ export class GamePage {
   playersResult(){
     let results = [];
     _.each(this.players, player => {
-      let oppositeTeam = (player.team == 'red') ? 'blue' : 'red';
+      let oppositeTeam = this.getOpponentTeamName(player.team);
       results.push({
         player_id: player.id,
         team: player.team,
@@ -169,7 +163,7 @@ export class GamePage {
       content: 'Please wait...'
     });
     loading.present();
-    this.gamesProvider.save({ "games": {
+    this.gamesProvider.save({ 'games': {
       red_attacker_id: this.groupedPlayers.red[0].id,
       red_defender_id: this.groupedPlayers.red[1].id,
       blue_attacker_id: this.groupedPlayers.blue[0].id,
