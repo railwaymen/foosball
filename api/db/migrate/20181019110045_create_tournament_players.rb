@@ -7,6 +7,6 @@ class CreateTournamentPlayers < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :tournament_players, [:player_id, :tournament_id], unique: true
+    add_index :tournament_players, %i[player_id tournament_id], unique: true
   end
 end

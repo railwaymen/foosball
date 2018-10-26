@@ -6,8 +6,9 @@ class ApiKeyService
 
   def access?
     return false if api_key.blank?
+
     begin
-      JWT.decode @access_token, api_key.client_secret, true, { algorithm: 'HS256' }
+      JWT.decode @access_token, api_key.client_secret, true, algorithm: 'HS256'
       return true
     rescue JWT::ExpiredSignature
       return false
