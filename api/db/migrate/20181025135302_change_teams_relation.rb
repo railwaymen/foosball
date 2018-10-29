@@ -7,7 +7,6 @@ class ChangeTeamsRelation < ActiveRecord::Migration[5.2]
     add_reference :teams, :defender, foreign_key: { to_table: :players }
   end
 
-
   def down
     remove_column :teams, :attacker_id
     remove_column :teams, :defender_id
