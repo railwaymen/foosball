@@ -26,7 +26,7 @@
 
   <ion-grid text-center>
     <ion-row>
-      <ion-col col-4 *ngFor="let user of users" (touchstart)="addPlayer(user)">
+      <ion-col col-4 *ngFor="let user of users" (tap)="addPlayer(user)">
         <ion-card>
             <ion-card-content>
               {{user.name()}}
