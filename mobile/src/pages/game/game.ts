@@ -151,7 +151,46 @@ export class GamePage {
     return results;
   }
 
-  public save(): void {
+  confirmRematch() {
+    let alert = this.alertCtrl.create({
+      title: 'Rematch',
+      message: 'Do you want to play rematch?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => this.closeGame()
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            _.each(this.players, player => player.switchTeam());
+            this.navCtrl.push(GamePage, { players: this.players });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  afterGameSaved(){
+    if(!!this.groupId) {
+      this.closeGame()
+    } else {
+      this.confirmRematch()
+    }
+  }
+
+  closeGame(){
+    if(!!this.groupId) {
+      this.navCtrl.getPrevious().instance.resetTeams();
+      this.viewCtrl.dismiss();
+    } else {
+      this.navCtrl.popToRoot();
+    }
+  }
+
+  public save(): void{
     this.finishedAt = new Date();
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -171,8 +210,7 @@ export class GamePage {
     })
     .then(data => {
       loading.dismiss();
-      this.navCtrl.getPrevious().instance.resetTeams();
-      this.viewCtrl.dismiss();
+      this.afterGameSaved();
     }).catch(error => {
       loading.dismiss();
       this.presentAlert();
