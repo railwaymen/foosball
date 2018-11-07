@@ -7,9 +7,9 @@ RSpec.describe AssignTeamsService do
 
     before do
       (1..teams_count).each do |i|
-        attacker = Player.create!(first_name: "Attacker#{i}", last_name: "Nowak", email: "attacker_#{i}@example.com")
+        attacker = Player.create!(first_name: "Attacker#{i}", last_name: 'Nowak', email: "attacker_#{i}@example.com")
         tournament.tournament_players.create!(player: attacker, position: :attacker)
-        defender = Player.create!(first_name: "Attacker#{i}", last_name: "Nowak", email: "attacker_#{i}@example.com")
+        defender = Player.create!(first_name: "Attacker#{i}", last_name: 'Nowak', email: "attacker_#{i}@example.com")
         tournament.tournament_players.create!(player: defender, position: :defender)
       end
     end

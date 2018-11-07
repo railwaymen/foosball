@@ -1,0 +1,36 @@
+AllCops:
+  Exclude:
+    - 'vendor/gems/**/*'
+    - 'db/migrate/*'
+    - 'db/schema.rb'
+    - 'bin/*'
+
+BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+LineLength:
+  Enabled: true
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+MethodLength:
+  Enabled: true
+  Max: 25
+
+Style/BlockComments:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20

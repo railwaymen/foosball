@@ -1,9 +1,9 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.0"
+lock '~> 3.11.0'
 
-set :application, "foosball"
-set :repo_url, "https://github.com/railwaymen/foosball.git"
-set :repo_tree, "api"
+set :application, 'foosball'
+set :repo_url, 'https://github.com/railwaymen/foosball.git'
+set :repo_tree, 'api'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -22,7 +22,7 @@ set :repo_tree, "api"
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/database.yml", "config/master.key"
+append :linked_files, 'config/database.yml', 'config/master.key'
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"

@@ -5,14 +5,16 @@ class ApiKey < ApplicationRecord
   private
 
   def generate_client_id
-    begin
+    loop do
       self.client_id = SecureRandom.hex
-    end while self.class.exists?(client_id: client_id)
+      break unless self.class.exists?(client_id: client_id)
+    end
   end
 
   def generate_client_secret
-    begin
+    loop do
       self.client_secret = SecureRandom.hex
-    end while self.class.exists?(client_secret: client_secret)
+      break unless self.class.exists?(client_secret: client_secret)
+    end
   end
 end

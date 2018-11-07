@@ -6,6 +6,6 @@ class CreateGroups < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
-    add_index :groups, [:name, :tournament_id], unique: true
+    add_index :groups, %i[name tournament_id], unique: true
   end
 end

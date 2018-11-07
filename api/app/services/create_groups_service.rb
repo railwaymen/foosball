@@ -14,7 +14,7 @@ class CreateGroupsService
 
   def create_groups
     letter = 'A'
-    @amount.times do |index|
+    @amount.times do
       @tournament.groups.create!(name: letter)
       letter = letter.next
     end
@@ -37,8 +37,8 @@ class CreateGroupsService
     loop do
       value = (count / divide_by).round
       amounts_array << value
-      count = count - value
-      divide_by = divide_by - 1
+      count -= value
+      divide_by -= 1
       break if divide_by.zero?
     end
     amounts_array.sort
