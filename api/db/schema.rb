@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_140000) do
+ActiveRecord::Schema.define(version: 2018_11_02_123549) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_140000) do
     t.integer "elo_rating", default: 1200, null: false
     t.integer "elo_rating_defender", default: 1200, null: false
     t.integer "elo_rating_attacker", default: 1200, null: false
+    t.integer "activity_level", default: 0, null: false
   end
 
   create_table "teams", force: :cascade do |t|
