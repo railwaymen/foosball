@@ -1,10 +1,12 @@
-export class UserModel {
+import { IUser } from './../pages/game/game.interfaces';
 
-  constructor(public id: number, public firstName: string, public lastName: string){
+export class UserModel implements IUser {
+
+  public constructor(public id: number, public firstName: string, public lastName: string) {
 
   }
 
-  name(){
+  public name(): string {
     return this.firstName + ' ' + this.lastName;
   }
 }

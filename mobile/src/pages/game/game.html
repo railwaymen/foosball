@@ -14,14 +14,22 @@
     <ion-col text-right (swipe)="swipeBlue($event)">
       <span class="score blue">{{score.blue}}</span>
     </ion-col>
-    <ion-col col-6 class = "user-list">
+    <ion-col #usersList col-6 class = "user-list">
       <ion-list>
-        <player-goal-slider [player]="groupedPlayers.blue[0]" (scored)="onGoal($event)" direction="left"></player-goal-slider>
-        <player-goal-slider [player]="groupedPlayers.blue[1]" (scored)="onGoal($event)" direction="left"></player-goal-slider>
+        <player-goal-slider [attr.data-player]="groupedPlayers.blue[0].id" [attr.data-team]="groupedPlayers.blue[0].team" [player]="groupedPlayers.blue[0]" (scored)="onGoal($event)" direction="left">
+          <ion-icon name="shirt" class="shirt-red"></ion-icon>
+        </player-goal-slider>
+        <player-goal-slider [attr.data-player]="groupedPlayers.blue[1].id" [attr.data-team]="groupedPlayers.blue[1].team" [player]="groupedPlayers.blue[1]" (scored)="onGoal($event)" direction="left">
+          <ion-icon name="shirt" class="shirt-red"></ion-icon>
+        </player-goal-slider>
       </ion-list>
       <ion-list>
-        <player-goal-slider [player]="groupedPlayers.red[0]" (scored)="onGoal($event)" direction="right"></player-goal-slider>
-        <player-goal-slider [player]="groupedPlayers.red[1]" (scored)="onGoal($event)" direction="right"></player-goal-slider>
+        <player-goal-slider [attr.data-player]="groupedPlayers.red[0].id" [attr.data-team]="groupedPlayers.red[0].team" [player]="groupedPlayers.red[0]" (scored)="onGoal($event)" direction="right">
+          <ion-icon name="shirt" class="shirt-red"></ion-icon>
+        </player-goal-slider>
+        <player-goal-slider [attr.data-player]="groupedPlayers.red[1].id" [attr.data-team]="groupedPlayers.red[1].team" [player]="groupedPlayers.red[1]" (scored)="onGoal($event)" direction="right">
+          <ion-icon name="shirt" class="shirt-red"></ion-icon>
+        </player-goal-slider>
       </ion-list>
     </ion-col>
     <ion-col text-left (swipe)="swipeRed($event)">

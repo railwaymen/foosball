@@ -22,19 +22,46 @@ page-game {
       }
     }
   }
-  ion-item[data-team^=blue] ion-icon[name^=arrow]{
-    color: color(team-blue);
-    &[name^=arrow-dropright] {
-      color: color(team-red);
-    }
-  }
-  ion-item[data-team^=red] ion-icon[name^=arrow]{
-    color: color(team-red);
-    &[name^=arrow-dropleft] {
-      color: color(team-blue);
-    }
-  }
 
+  .player-score {
+    position: absolute;
+    left: 23%;
+    div {
+      font-size: 45px;
+    }
+    .player-own-score {
+      opacity: 0.6;
+      font-size: 22.5px;
+    }
+  }
+  ion-item[data-team^=blue] {
+    ion-icon[name^=arrow]{
+      color: color(team-blue);
+      &[name^=arrow-dropright] {
+        color: color(team-red);
+      }
+    }
+    .player-score {
+        color: color(team-blue);
+      .player-own-score {
+        color: color(team-red);
+      }
+    }
+  }
+  ion-item[data-team^=red] {
+    ion-icon[name^=arrow]{
+      color: color(team-red);
+      &[name^=arrow-dropleft] {
+        color: color(team-blue);
+      }
+    }
+    .player-score {
+      color: color(team-red);
+      .player-own-score {
+        color: color(team-blue);
+      }
+    }
+  }
   .score{
     font-size: 40vw;
   }
