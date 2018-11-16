@@ -1,9 +1,3 @@
-<!--
-  Generated template for the GamePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header class="custom-header">
 
   <ion-navbar>
@@ -22,51 +16,12 @@
     </ion-col>
     <ion-col col-6 class = "user-list">
       <ion-list>
-        <ion-item-sliding text-right *ngFor="let player of groupedPlayers.blue" ng-model-options="{ debounce: 5000 }" (ionDrag)="onDrag($event)" >
-           <ion-item [attr.data-player]="player.id" [attr.data-team]="player.team">
-            <ion-card>
-              <ion-card-content>
-                <ion-icon (tap)="playerGoal(player.id)" name="arrow-dropleft-circle"></ion-icon>
-                ({{goalsFor(player)}})
-                {{player.name()}}
-                <ion-icon name="shirt" class="shirt-blue"></ion-icon>
-                <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
-                <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
-                <ion-icon name="arrow" class="left-arrow"></ion-icon>
-                <ion-icon (tap)="playerGoal(player.id, true)" name="arrow-dropright"></ion-icon>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-          <ion-item-options side="left" class="own-goal">
-            <div>Own Goal :(</div>
-          </ion-item-options>
-          <ion-item-options side="right" class="goal">
-            <div>Goal!</div>
-          </ion-item-options>
-        </ion-item-sliding>
+        <player-goal-slider [player]="groupedPlayers.blue[0]" (scored)="onGoal($event)" direction="left"></player-goal-slider>
+        <player-goal-slider [player]="groupedPlayers.blue[1]" (scored)="onGoal($event)" direction="left"></player-goal-slider>
       </ion-list>
       <ion-list>
-        <ion-item-sliding text-right *ngFor="let player of groupedPlayers.red" (ionDrag)="onDrag($event)">
-          <ion-item [attr.data-player]="player.id" [attr.data-team]="player.team">
-            <ion-card>
-              <ion-card-content>
-                <ion-icon (tap)="playerGoal(player.id, true)" name="arrow-dropleft"></ion-icon>
-                ({{goalsFor(player)}})
-                {{player.name()}}
-                <ion-icon name="shirt" class="shirt-red"></ion-icon>
-                <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
-                <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
-                <ion-icon (tap)="playerGoal(player.id)" name="arrow-dropright-circle"></ion-icon>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-          <ion-item-options side="left" class="goal">
-            <div>Goal!</div>
-          </ion-item-options>
-          <ion-item-options side="right" class="own-goal">
-            <div>Own Goal :(</div>
-          </ion-item-options>
-        </ion-item-sliding>
+        <player-goal-slider [player]="groupedPlayers.red[0]" (scored)="onGoal($event)" direction="right"></player-goal-slider>
+        <player-goal-slider [player]="groupedPlayers.red[1]" (scored)="onGoal($event)" direction="right"></player-goal-slider>
       </ion-list>
     </ion-col>
     <ion-col text-left (swipe)="swipeRed($event)">

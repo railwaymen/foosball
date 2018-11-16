@@ -1,5 +1,5 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController, ItemSliding } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { GamesProvider } from '../../providers/games/games';
 import _ from 'lodash';
 
@@ -10,7 +10,6 @@ import _ from 'lodash';
 })
 
 export class GamePage {
-  @ViewChildren(ItemSliding) usernameNode: QueryList<ItemSliding>;
   public score: any;
   public players: Array<any>=[];
   public groupedPlayers: any;
@@ -38,50 +37,14 @@ export class GamePage {
      );
     this.goalsHistory = {blue: [], red: []};
   }
-  ngAfterViewInit() {
-    this.initializeObserver();
-  }
 
-  initializeObserver(): void {
-    const nodesToObserve: Array<ItemSliding> = this.usernameNode.toArray();
-    nodesToObserve.forEach((node) => {
-      const targetItem: Node = node.item._elementRef.nativeElement;
-      const observer: MutationObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => this.handleMutation(mutation, targetItem));
-      });
-      observer.observe(targetItem, {
-        attributes: true,
-        attributeOldValue: true,
-        attributeFilter: ['style']
-      });
-    });
-  }
-
-  handleMutation(mutation: MutationRecord, element: any): void {
-    interface IPlayer {
-      team: string,
-      player: string
-    }
-    if (!mutation || !mutation.oldValue) return
-    const translate3dFirstVal: RegExpMatchArray = mutation.oldValue.match(/(\(.\d{2,})/g);
-    if (!translate3dFirstVal) return;
-    const position: number = parseInt(translate3dFirstVal[0].split('(')[1]);
-    const maxValue: number = element.offsetWidth;
-    const playerProps: IPlayer = element.dataset;
-
-    if (!element.getAttribute('style').length) {
-      this.scoreFreezed = false;
-    }
-    if ((position === maxValue
-      || position === -maxValue)
-      && !this.scoreFreezed) {
-      if (playerProps.team === 'blue') {
-        this.playerGoal(parseInt(playerProps.player), position > 0);
-      } else {
-        this.playerGoal(parseInt(playerProps.player), position < 0);
-      }
-      this.scoreFreezed = true;
-    }
+  onGoal(info) {
+    if (this.isFinish()) return;
+    let player = info.player;
+    let team = info.own ? this.getOpponentTeamName(player.team) : player.team;
+    this.score[team]++;
+    this.goalsHistory[team].push(player.id);
+    this.goals[player.id]++;
   }
 
   isFinish(){
@@ -90,20 +53,6 @@ export class GamePage {
 
   goalsFor(player){
     return this.goals[player.id];
-  }
-
-  playerGoal(playerId, own:boolean = false): void {
-    if (this.isFinish()) return;
-
-    const player = _.find(this.players, {id: playerId});
-    this.addGoal(player, own);
-    this.goals[player.id]++;
-  }
-
-  addGoal(player, own: boolean = false): void {
-    const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
-    this.score[teamToAddPoint]++;
-    this.goalsHistory[teamToAddPoint].push(player.id);
   }
 
   getOpponentTeamName(team: string): string {
@@ -115,13 +64,6 @@ export class GamePage {
     this.goals[playerId] -= 1;
     if (this.score[team] < 1) return;
     this.score[team] -= 1;
-  }
-
-  onDrag(item: ItemSliding): void {
-    setTimeout(() => {
-      item.close();
-      return;
-    }, 2000);
   }
 
   swipeBlue(event){
