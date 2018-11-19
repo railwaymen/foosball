@@ -12,7 +12,6 @@ import _ from 'lodash';
 })
 
 export class GamePage {
-  @ViewChild('usersList') public UserList : ElementRef;
   private readonly gameUpTo: number = 10;
 
   public score: IScore;
@@ -24,7 +23,7 @@ export class GamePage {
   public goalsHistory: IGameHistory;
   public scoreFreezed: boolean = false;
   public groupId: number;
-  public leader: number;
+  public leaderId: number;
   public leaderGoalsCount: number;
 
   public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
@@ -69,7 +68,7 @@ export class GamePage {
     return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo;
   }
 
-  public getAllPlayerGoalsCount(player: IUserModel): number{
+  public getAllPlayerGoalsCount(player: IUserModel): number {
 
     return this.goals[player.id];
   }
@@ -89,31 +88,9 @@ export class GamePage {
   }
 
   public setCurrentLeader(): void {
-    const nodesToDecorate = this.UserList.nativeElement.getElementsByTagName('player-goal-slider');
-    for (const node of nodesToDecorate) {
-      const playerProps: IPlayerData = node.dataset;
-      const playerGoals: number = this.getSpecificPlayerGoalsCount({ id: parseInt(playerProps.player), team: playerProps.team});
-      const playerOwnGoals: number = this.getSpecificPlayerGoalsCount({ id: parseInt(playerProps.player), team: playerProps.team}, true);
-
-      if (playerGoals - playerOwnGoals > this.leaderGoalsCount) {
-        this.leaderGoalsCount = playerGoals;
-        this.leader = parseInt(playerProps.player);
-      }
-    }
-    this.restyleNodes();
+    const maxVal = _.max(_.values(this.goals));
+    this.leaderId = parseInt(_.keys(this.goals).find(key => this.goals[key] === maxVal));
   }
-
-    public restyleNodes(): void {
-      const dataNodes = this.UserList.nativeElement.getElementsByTagName('player-goal-slider');
-      for (const node of dataNodes) {
-        const playerProps: IPlayerData = node.dataset;
-        if (parseInt(playerProps.player) === this.leader) {
-          node.getElementsByClassName('card')[0].style.borderBottom = '10px solid yellow';
-        } else {
-          node.getElementsByClassName('card')[0].style.borderBottom = '1px solid rgba(0,0,0,0.2)';
-        }
-      }
-    }
 
   private addGoal(player: IUserModel, own: boolean = false): void {
     const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;

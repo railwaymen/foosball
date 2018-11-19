@@ -3,7 +3,7 @@
     <h1>{{leftText()}}</h1>
   </ion-slide>
   <ion-slide>
-    <ion-card>
+    <ion-card [ngClass] = "{leader: player.id === leaderId}">
       <ion-card-content>
         <ion-icon (touchend)="goalTouched('left')" name="arrow-dropleft"></ion-icon>
         {{player.name()}}
