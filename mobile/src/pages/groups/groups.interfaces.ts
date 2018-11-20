@@ -12,7 +12,6 @@ export interface IGroupTeam {
   defender_id: number,
   defender_first_name: string,
   defender_last_name: string
-
 }
 
 export type Team = 'blue' | 'red';
