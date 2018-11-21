@@ -26,6 +26,7 @@ export class GroupsPage {
   public ionViewWillEnter(): void {
     this.players = [];
     this.groupsProvider.load();
+    this.resetTeams()
   }
 
   public addTeam(team: IGroupTeam, group: IGroup): void {

@@ -59,6 +59,10 @@ export class HomePage {
     alert.present();
   }
 
+  ionViewWillEnter(){
+    this.resetTeams()
+  }
+
   public async loadUsers(): Promise<{}> {
     return this.usersProvider.load()
     .then(data => {
