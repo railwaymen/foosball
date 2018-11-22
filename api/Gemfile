@@ -17,6 +17,7 @@ gem 'responders'
 gem 'rack-cors'
 gem 'jwt'
 gem 'faker'
+gem 'kaminari'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8'

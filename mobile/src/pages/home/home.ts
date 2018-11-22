@@ -2,6 +2,8 @@ import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController, Refresher } from 'ionic-angular';
 import { GamePage } from '../game/game';
+import { GameListPage } from '../game-list/game-list';
+import { GroupsPage } from '../groups/groups';
 import { UsersProvider } from '../../providers/users/users';
 
 import _ from 'lodash';
@@ -68,6 +70,10 @@ export class HomePage {
 
   public play(): void {
     this.navCtrl.push(GamePage, { players: this.players });
+  }
+
+  showGameList(){
+    this.navCtrl.push(GameListPage);
   }
 
   public isTeamCompleted(): boolean {

@@ -1,0 +1,60 @@
+<!--
+  Generated template for the GameListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Games List</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-grid text-center>
+    <ion-row *ngFor="let game of gamesProvider.data">
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-6>
+                <h1>
+                  Red: {{ game.red_score }}
+                </h1>
+                <p>
+                  <ion-icon name='football'></ion-icon>
+                  {{ game.findPlayer('red', 'attacker') }}
+                </p>
+                <p>
+                  <ion-icon name='body'></ion-icon>
+                  {{ game.findPlayer('red', 'defender') }}
+                </p>
+              </ion-col>
+              <ion-col col-6>
+                <h1>
+                  Blue: {{game.blue_score}}
+                </h1>
+                <p>
+                  <ion-icon name='football'></ion-icon>
+                  {{ game.findPlayer('blue', 'attacker') }}
+                </p>
+                <p>
+                  <ion-icon name='body'></ion-icon>
+                  {{ game.findPlayer('blue', 'defender') }}
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+     <ion-infinite-scroll-content></ion-infinite-scroll-content>
+   </ion-infinite-scroll>
+
+  </ion-grid>
+
+</ion-content>

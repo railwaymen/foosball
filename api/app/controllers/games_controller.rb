@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
+  PAGINATE_PER = 10
+
+  def index
+    @games = Game.all.includes(games_players: :player)
+    @games = @games.page(params['page']).per(PAGINATE_PER) if params['page'].present?
+  end
+
   def create
     @game = Game.create!(game_params)
     UpdateGroupPointsService.new(@game).call if @game.group_id.present?

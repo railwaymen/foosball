@@ -12,6 +12,8 @@ import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { UserDetailPageModule } from '../pages/user-detail/user-detail.module';
 import { GamePage } from '../pages/game/game';
 import { GamePageModule } from '../pages/game/game.module';
+import { GameListPage } from '../pages/game-list/game-list';
+import { GameListPageModule } from '../pages/game-list/game-list.module';
 import { GroupsPage } from '../pages/groups/groups';
 import { GroupsPageModule } from '../pages/groups/groups.module';
 import { TokenProvider } from '../providers/token/token';
@@ -28,6 +30,7 @@ import { GroupsProvider } from '../providers/groups/groups';
     BrowserModule,
     HttpModule,
     GamePageModule,
+    GameListPageModule,
     GroupsPageModule,
     UserDetailPageModule,
     IonicModule.forRoot(MyApp),
@@ -39,6 +42,7 @@ import { GroupsProvider } from '../providers/groups/groups';
     HomePage,
     UserDetailPage,
     GamePage,
+    GameListPage,
     GroupsPage
   ],
   providers: [
