@@ -20,6 +20,12 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
 end
 
+group :test do
+  gem 'simplecov', require: false
+  gem 'shoulda-matchers', '4.0.0.rc1'
+  gem 'rails-controller-testing' # If you are using Rails 5.x
+end
+
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
