@@ -1,10 +1,12 @@
+import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, Refresher } from 'ionic-angular';
 import { GamePage } from '../game/game';
 import { GroupsPage } from '../groups/groups';
 import { UsersProvider } from '../../providers/users/users';
 
 import _ from 'lodash';
+import { IUserModel } from '../game/game.interfaces';
 
 @Component({
   selector: 'page-home',
@@ -13,15 +15,14 @@ import _ from 'lodash';
 })
 export class HomePage {
 
-  public users: any;
-  public players: Array<any>=[];
-  public teams: Array<any>=[];
-  public positions: Array<any>=[];
+  public users: Dictionary<Array<IUserModel>>;
+  public players: Array<IUserModel> = [];
+  public teams: Array<'blue' | 'red'> = [];
+  public positions: Array<'defender' | 'attacker'> = [];
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, public usersProvider: UsersProvider) {
+  public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, public usersProvider: UsersProvider) {
     this.players = [];
-    this.users = [];
-    let loading = this.loadingCtrl.create({
+    const loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
     loading.present();
@@ -31,17 +32,18 @@ export class HomePage {
       this.presentAlert();
       loading.dismiss();
     });
-    this.teams = ['blue', 'red']
-    this.positions = ['defender', 'attacker']
+    this.teams = ['blue', 'red'];
+    this.positions = ['defender', 'attacker'];
   }
 
-  fetchUsers() {
+  public fetchUsers(): Promise<void> {
+
     return this.loadUsers().then(usersData => {
       this.users = usersData;
     });
   }
 
-  doRefresh(refresher) {
+  public doRefresh(refresher: Refresher): void {
     this.fetchUsers().then(() => {
       refresher.complete();
     }).catch(error => {
@@ -50,8 +52,8 @@ export class HomePage {
     });
   }
 
-  presentAlert() {
-    let alert = this.alertCtrl.create({
+  public presentAlert(): void {
+    const alert = this.alertCtrl.create({
       title: 'Oops',
       subTitle: 'Something went wrong',
       buttons: ['Ok']
@@ -59,91 +61,98 @@ export class HomePage {
     alert.present();
   }
 
-  ionViewDidLoad(){
+  public loadUsers(): Promise<{}> {
 
-  }
-
-  loadUsers(){
     return this.usersProvider.load()
     .then(data => {
       return data;
     });
   }
 
-  play(){
-    this.navCtrl.push(GamePage, { players: this.players })
+  public play(): void {
+    this.navCtrl.push(GamePage, { players: this.players });
   }
 
-  showGroups(){
+  public showGroups(): void {
     this.navCtrl.push(GroupsPage, { players: this.players });
   }
 
-  isTeamCompleted(){
+  public isTeamCompleted(): boolean {
     return _.size(this.players) >= 4;
   }
 
-  addPlayer(user){
-    if(this.isPlayer(user)){
-      this.removePlayer(user)
-    }else if(!this.isTeamCompleted()){
-      var player = _.clone(user);
+  public addPlayer(user: IUserModel): void {
+    if (this.isPlayer(user)){
+      this.removePlayer(user);
+    } else if (!this.isTeamCompleted()){
+      const player = _.clone(user);
       player.team = this.currentTeam();
       player.position = this.currentPositionFor(player.team);
       this.players.push(player);
     }
   }
 
-  currentTeam(){
-    if(_.size(_.filter(this.players, { 'team': _.first(this.teams) })) > 1){
-      return _.last(this.teams)
+  public currentTeam(): 'blue' | 'red' {
+    if (_.size(_.filter(this.players, { 'team': _.first(this.teams) })) > 1){
+
+      return _.last(this.teams);
     } else {
-      return _.first(this.teams)
+
+      return _.first(this.teams);
     }
   }
 
-  currentPositionFor(team){
-    if(_.size(_.filter(this.players, { team: team, 'position': _.first(this.positions) })) > 0){
-      return _.last(this.positions)
+  public currentPositionFor(team: 'blue' | 'red'): 'defender' | 'attacker' {
+    if (_.size(_.filter(this.players, { team: team, 'position': _.first(this.positions) })) > 0){
+
+      return _.last(this.positions);
     } else {
-      return _.first(this.positions)
+
+      return _.first(this.positions);
     }
   }
 
-  playerInfo(user){
-    var player = this.findPlayer(user)
-    if(player)
-      return `${player.position}`
+  public playerInfo(user: IUserModel): string {
+    const player = this.findPlayer(user);
+    if (player)
+
+      return `${player.position}`;
   }
 
-  removePlayer(user){
-    _.remove(this.players, function(player) {
+  public removePlayer(user: IUserModel): void {
+    _.remove(this.players, function(player: IUserModel): boolean {
+
       return player.id === user.id;
     });
   }
 
-  playerSize(){
+  public playerSize(): number {
+
     return _.size(this.players);
   }
 
-  findPlayer(user){
-    return _.find(this.players, function(player){ return player.id === user.id; });
+  public findPlayer(user: IUserModel): IUserModel {
+
+    return _.find(this.players, function(player: IUserModel): boolean { return player.id === user.id; });
   }
 
-  isPlayer(user){
+  public isPlayer(user: IUserModel): boolean {
     return !_.isEmpty(this.findPlayer(user));
   }
 
-  isDefender(user){
-    var player = this.findPlayer(user);
-    return player && player.position == 'defender'
+  public isDefender(user: IUserModel): boolean {
+    const player = this.findPlayer(user);
+
+    return player && player.position === 'defender';
   }
 
-  isAttacker(user){
-    var player = this.findPlayer(user);
-    return player && player.position == 'attacker'
+  public isAttacker(user: IUserModel): boolean {
+    const player = this.findPlayer(user);
+
+    return player && player.position === 'attacker';
   }
 
-  resetTeams(){
+  public resetTeams(): void {
     this.players = [];
   }
 }

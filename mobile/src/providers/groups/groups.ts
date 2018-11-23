@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Http } from '@angular/http';
 import { GroupModel } from '../../models/group-model';
-import { ENV } from '@app/env'
+import { ENV } from '@app/env';
 import { TokenProvider } from '../token/token';
 
 @Injectable()
 export class GroupsProvider {
 
-  data: Array<any>=[];
-  endpoint: string;
+  public data: Array<any> = [];
+  public endpoint: string;
 
-  constructor(public http: Http, public tokenProvider: TokenProvider) {
+  public constructor(public http: Http, public tokenProvider: TokenProvider) {
     this.endpoint = `${ENV.API_URL}/tournaments/1/groups.json`
   }
 
-  load(params={}) {
+  public load(params={}) {
     return new Promise((resolve, reject) => {
       this.http.get(`${this.endpoint}`, this.tokenProvider.requestOptions())
         .map(res => res.json())

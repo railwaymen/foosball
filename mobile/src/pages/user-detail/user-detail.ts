@@ -8,13 +8,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class UserDetailPage {
 
-  name;
+  public name: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad(): void {
     this.name = this.navParams.get('user').name;
   }
-
 }

@@ -7,6 +7,7 @@ import { Slides } from 'ionic-angular';
 })
 export class PlayerGoalSliderComponent {
   @Input('player') player: object;
+  @Input('leaderId') leaderId: number;
   @Input('direction') direction: string;
   @Output() scored = new EventEmitter<{player: string, own: boolean}>();
   @ViewChild(Slides) slides: Slides;
