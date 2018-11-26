@@ -9,7 +9,13 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "test": "karma start ./config/test/karma.conf.js",
+    "test-ci": "karma start ./config/test/karma.conf.js --single-run",
+    "test-coverage": "karma start ./config/test/karma.conf.js --coverage",
+    "e2e": "npm run e2e-update && npm run e2e-test",
+    "e2e-test": "protractor ./config/test/protractor.conf.js",
+    "e2e-update": "webdriver-manager update --versions.chrome=2.36 --standalone false --gecko false"
   },
   "dependencies": {
     "@angular/common": "5.0.3",
