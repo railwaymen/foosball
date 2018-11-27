@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { AddUserPage } from '../pages/add-user/add-user';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { UserDetailPageModule } from '../pages/user-detail/user-detail.module';
 import { GamePage } from '../pages/game/game';
@@ -23,8 +22,7 @@ import { GroupsProvider } from '../providers/groups/groups';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    AddUserPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +37,6 @@ import { GroupsProvider } from '../providers/groups/groups';
   entryComponents: [
     MyApp,
     HomePage,
-    AddUserPage,
     UserDetailPage,
     GamePage,
     GroupsPage

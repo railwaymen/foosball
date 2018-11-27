@@ -5,13 +5,9 @@ export interface IUser {
   id: number,
   lastName: string
 }
-export interface IUserModel extends IUser {
+export interface IUserPlayer extends IUser {
   position: string,
   team: 'blue' | 'red'
-}
-export interface IPlayerData {
-  team: 'blue' | 'red',
-  player: string
 }
 export interface IGameHistory {
   blue: Array<string>,
@@ -28,13 +24,6 @@ export interface IScore {
   red: number,
   blue: number
 }
-export interface IUserResult {
-  player_id: number,
-  team: 'blue' | 'red',
-  position: number,
-  gols: number,
-  own_gols: number
-}
 
 export interface ISwipeEvent {
   direction: number
@@ -42,5 +31,26 @@ export interface ISwipeEvent {
 
 export interface IOnGoalInfo {
   own: boolean,
-  player: IUserModel
+  player: IUserPlayer
+}
+
+export interface IGame {
+  red_attacker_id: number,
+  red_defender_id: number,
+  blue_attacker_id: number,
+  blue_defender_id: number,
+  blue_score: number,
+  red_score: number,
+  started_at: Date,
+  finished_at: Date,
+  group_id: number,
+  games_players_attributes: Array<IGamePlayer>
+}
+
+export interface IGamePlayer {
+  player_id: number,
+  team: string,
+  position: string,
+  gols: number,
+  own_gols: number
 }

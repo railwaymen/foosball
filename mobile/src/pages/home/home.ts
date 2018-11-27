@@ -6,7 +6,7 @@ import { GroupsPage } from '../groups/groups';
 import { UsersProvider } from '../../providers/users/users';
 
 import _ from 'lodash';
-import { IUserModel } from '../game/game.interfaces';
+import { IUserPlayer } from '../game/game.interfaces';
 
 @Component({
   selector: 'page-home',
@@ -15,12 +15,12 @@ import { IUserModel } from '../game/game.interfaces';
 })
 export class HomePage {
 
-  public users: Dictionary<Array<IUserModel>>;
-  public players: Array<IUserModel> = [];
+  public users: Dictionary<Array<IUserPlayer>>;
+  public players: Array<IUserPlayer> = [];
   public teams: Array<'blue' | 'red'> = [];
   public positions: Array<'defender' | 'attacker'> = [];
 
-  public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, public usersProvider: UsersProvider) {
+  public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private readonly alertCtrl: AlertController, public usersProvider: UsersProvider) {
     this.players = [];
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -36,8 +36,7 @@ export class HomePage {
     this.positions = ['defender', 'attacker'];
   }
 
-  public fetchUsers(): Promise<void> {
-
+  public async fetchUsers(): Promise<void> {
     return this.loadUsers().then(usersData => {
       this.users = usersData;
     });
@@ -61,8 +60,7 @@ export class HomePage {
     alert.present();
   }
 
-  public loadUsers(): Promise<{}> {
-
+  public async loadUsers(): Promise<{}> {
     return this.usersProvider.load()
     .then(data => {
       return data;
@@ -81,7 +79,7 @@ export class HomePage {
     return _.size(this.players) >= 4;
   }
 
-  public addPlayer(user: IUserModel): void {
+  public addPlayer(user: IUserPlayer): void {
     if (this.isPlayer(user)){
       this.removePlayer(user);
     } else if (!this.isTeamCompleted()){
@@ -112,15 +110,15 @@ export class HomePage {
     }
   }
 
-  public playerInfo(user: IUserModel): string {
+  public playerInfo(user: IUserPlayer): string {
     const player = this.findPlayer(user);
     if (player)
 
       return `${player.position}`;
   }
 
-  public removePlayer(user: IUserModel): void {
-    _.remove(this.players, function(player: IUserModel): boolean {
+  public removePlayer(user: IUserPlayer): void {
+    _.remove(this.players, function(player: IUserPlayer): boolean {
 
       return player.id === user.id;
     });
@@ -131,22 +129,22 @@ export class HomePage {
     return _.size(this.players);
   }
 
-  public findPlayer(user: IUserModel): IUserModel {
+  public findPlayer(user: IUserPlayer): IUserPlayer {
 
-    return _.find(this.players, function(player: IUserModel): boolean { return player.id === user.id; });
+    return _.find(this.players, function(player: IUserPlayer): boolean { return player.id === user.id; });
   }
 
-  public isPlayer(user: IUserModel): boolean {
+  public isPlayer(user: IUserPlayer): boolean {
     return !_.isEmpty(this.findPlayer(user));
   }
 
-  public isDefender(user: IUserModel): boolean {
+  public isDefender(user: IUserPlayer): boolean {
     const player = this.findPlayer(user);
 
     return player && player.position === 'defender';
   }
 
-  public isAttacker(user: IUserModel): boolean {
+  public isAttacker(user: IUserPlayer): boolean {
     const player = this.findPlayer(user);
 
     return player && player.position === 'attacker';

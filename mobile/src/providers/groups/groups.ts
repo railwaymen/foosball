@@ -8,23 +8,23 @@ import { TokenProvider } from '../token/token';
 @Injectable()
 export class GroupsProvider {
 
-  public data: Array<any> = [];
-  public endpoint: string;
+  private data: Array<GroupModel> = [];
+  private readonly endpoint: string;
 
   public constructor(public http: Http, public tokenProvider: TokenProvider) {
-    this.endpoint = `${ENV.API_URL}/tournaments/1/groups.json`
+    this.endpoint = `${ENV.API_URL}/tournaments/1/groups.json`;
   }
 
-  public load(params={}) {
+  public async load(): Promise<{}> {
     return new Promise((resolve, reject) => {
       this.http.get(`${this.endpoint}`, this.tokenProvider.requestOptions())
         .map(res => res.json())
         .subscribe(data => {
           this.data = [];
-          for (let row of data) {
+          for (const row of data) {
             this.data.push(
               new GroupModel(row.id, row.name, row.teams, row.tournament_id)
-            )
+            );
           }
           resolve(this.data);
         }, err => reject(err));

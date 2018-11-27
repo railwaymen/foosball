@@ -1,8 +1,8 @@
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { Dictionary } from 'underscore';
-import { Component, QueryList, ViewChildren, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { GamesProvider } from '../../providers/games/games';
-import { ISwipeEvent, IAlertMessage, IScore, IUserModel, IUserResult, IUser, IPlayerData, IGameHistory, IOnGoalInfo } from './game.interfaces';
+import { ISwipeEvent, IAlertMessage, IScore, IUserPlayer, IGamePlayer, IGameHistory, IOnGoalInfo } from './game.interfaces';
 import _ from 'lodash';
 
 @IonicPage()
@@ -15,8 +15,8 @@ export class GamePage {
   private readonly gameUpTo: number = 10;
 
   public score: IScore;
-  public players: Array<IUserModel> = [];
-  public groupedPlayers: Dictionary<Array<IUserModel>>;
+  public players: Array<IUserPlayer> = [];
+  public groupedPlayers: Dictionary<Array<IUserPlayer>>;
   public startedAt: Date;
   public finishedAt: Date;
   public goals: Object;
@@ -26,7 +26,7 @@ export class GamePage {
   public leaderId: number;
   public leaderGoalsCount: number;
 
-  public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
+  public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private readonly alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
       blue: 0,
       red: 0
@@ -68,12 +68,12 @@ export class GamePage {
     return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo;
   }
 
-  public getAllPlayerGoalsCount(player: IUserModel): number {
+  public getAllPlayerGoalsCount(player: IUserPlayer): number {
 
     return this.goals[player.id];
   }
 
-  public getPositivePlayerGoals(player: IUserModel): number {
+  public getPositivePlayerGoals(player: IUserPlayer): number {
     return this.goals[player.id] - this.getSpecificPlayerGoalsCount(player, true);
   }
 
@@ -92,7 +92,7 @@ export class GamePage {
     this.leaderId = parseInt(_.keys(this.goals).find(key => this.goals[key] === maxVal));
   }
 
-  private addGoal(player: IUserModel, own: boolean = false): void {
+  private addGoal(player: IUserPlayer, own: boolean = false): void {
     const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
     this.score[teamToAddPoint]++;
     this.goalsHistory[teamToAddPoint].push(player.id);
@@ -135,7 +135,7 @@ export class GamePage {
     messages[type].present();
   }
 
-  public playersResult(): Array<IUserResult>{
+  public playersResult(): Array<IGamePlayer>{
     const results = [];
     _.each(this.players, player => {
       const oppositeTeam = this.getOpponentTeamName(player.team);
@@ -157,7 +157,7 @@ export class GamePage {
       content: 'Please wait...'
     });
     loading.present();
-    this.gamesProvider.save({ 'games': {
+    this.gamesProvider.save({
       red_attacker_id: this.groupedPlayers.red[0].id,
       red_defender_id: this.groupedPlayers.red[1].id,
       blue_attacker_id: this.groupedPlayers.blue[0].id,
@@ -168,7 +168,7 @@ export class GamePage {
       finished_at: this.finishedAt,
       group_id: this.groupId,
       games_players_attributes: this.playersResult()
-    } })
+    })
     .then(data => {
       loading.dismiss();
       this.navCtrl.getPrevious().instance.resetTeams();
