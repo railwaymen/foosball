@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RatingService
   RATING_CHANGE = 25
 
@@ -17,12 +19,14 @@ class RatingService
     [@game.blue_attacker, @game.blue_defender].each { |player| player.update!(elo_rating: new_blue_elo_rating(player)) }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def calculate_position_ratings
     @game.red_attacker.update!(elo_rating_attacker: new_red_position_elo_rating(@game.red_attacker.elo_rating_attacker))
     @game.red_defender.update!(elo_rating_defender: new_red_position_elo_rating(@game.red_defender.elo_rating_defender))
     @game.blue_attacker.update!(elo_rating_attacker: new_blue_position_elo_rating(@game.blue_attacker.elo_rating_attacker))
     @game.blue_defender.update!(elo_rating_defender: new_blue_position_elo_rating(@game.blue_defender.elo_rating_defender))
   end
+  # rubocop:enable Metrics/AbcSize
 
   def new_red_elo_rating(player)
     diff_outcome_esp = outcome('red') - expected_player_score(blue_average_rating, red_average_rating)
@@ -66,14 +70,6 @@ class RatingService
 
   def expected_player_score(score1, score2)
     1 / (1 + 10.pow(((score1 - score2) / 400))) * 2
-  end
-
-  def out(team)
-    if @game.red_score > @game.blue_score
-      team == 'red' ? 1 : -1
-    else
-      team == 'blue' ? 1 : -1
-    end
   end
 
   def outcome(team)

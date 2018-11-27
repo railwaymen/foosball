@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AssignTeamsService
   attr_reader :tournament
 

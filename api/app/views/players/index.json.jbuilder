@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @players do |player|
   json.id player.id
   json.first_name player.first_name

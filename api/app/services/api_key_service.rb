@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApiKeyService
   def initialize(access_token:, client_id:)
     @access_token = access_token

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateActivityLevelService
   def call
     Player.all.each do |player|

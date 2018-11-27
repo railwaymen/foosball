@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApiKey < ApplicationRecord
   before_create :generate_client_id
   before_create :generate_client_secret

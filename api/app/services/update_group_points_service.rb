@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateGroupPointsService
   GAME_UP_TO = 7
 

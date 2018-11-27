@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGroupsService
   def initialize(tournament, amount)
     @tournament = tournament

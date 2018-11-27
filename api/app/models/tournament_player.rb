@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TournamentPlayer < ApplicationRecord
   enum position: { attacker: 'attacker', defender: 'defender' }
 

@@ -7,29 +7,17 @@ AllCops:
 
 BlockLength:
   Exclude:
-    - 'config/routes.rb'
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
+    - config/routes.rb
+    - spec/**/*
 
 LineLength:
   Enabled: false
 
-Style/Documentation:
+Documentation:
   Enabled: false
 
-Bundler/OrderedGems:
+OrderedGems:
   Enabled: false
 
-MethodLength:
-  Enabled: true
-  Max: 25
-
-Style/BlockComments:
+BlockComments:
   Enabled: false
-
-Style/ExpandPathArguments:
-  Enabled: false
-
-Metrics/AbcSize:
-  Max: 20
