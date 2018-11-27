@@ -1,9 +1,9 @@
 AllCops:
   Exclude:
-    - 'vendor/gems/**/*'
-    - 'db/migrate/*'
-    - 'db/schema.rb'
-    - 'bin/*'
+    - vendor/**/*
+    - db/migrate/*
+    - db/schema.rb
+    - bin/*
 
 BlockLength:
   Exclude:

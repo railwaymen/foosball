@@ -40,7 +40,8 @@
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "underscore": "^1.8.3",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "cordova-ios": "~4.5.5"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
@@ -57,11 +58,13 @@
     },
     "platforms": [
       "android",
-      "browser"
+      "browser",
+      "ios"
     ]
   },
   "config": {
     "ionic_aot_write_to_disk": true,
+    "ionic_bail_on_lint_error": true,
     "ionic_optimization": "./config/optimization.config.js",
     "ionic_webpack": "./config/webpack.config.js"
   }

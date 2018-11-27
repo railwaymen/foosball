@@ -1,0 +1,25 @@
+matrix:
+  include:
+    - language: ruby
+      cache: bundler
+      rvm:
+        - 2.5.1
+      sudo: required
+      before_install:
+        - cd api
+      before_script:
+        - bundle exec rake db:create
+
+    - language: node_js
+      node_js:
+        - '10.10.0'
+      before_install:
+        - cd mobile
+      install:
+        - npm install
+      before_script:
+        - npm install -g ionic cordova
+        - cp src/environments/environment.example.ts src/environments/environment.ts
+        - cp src/environments/environment.example.ts src/environments/environment.prod.ts
+      script:
+       - ionic cordova build browser --prod
