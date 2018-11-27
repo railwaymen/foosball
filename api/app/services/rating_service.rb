@@ -49,23 +49,23 @@ class RatingService
   end
 
   def red_average_rating
-    @red_average_rating ||= BigDecimal.new(@game.red_attacker.elo_rating + @game.red_defender.elo_rating) / 2
+    @red_average_rating ||= BigDecimal(@game.red_attacker.elo_rating + @game.red_defender.elo_rating) / 2
   end
 
   def blue_average_rating
-    @blue_average_rating ||= BigDecimal.new(@game.blue_attacker.elo_rating + @game.blue_defender.elo_rating) / 2
+    @blue_average_rating ||= BigDecimal(@game.blue_attacker.elo_rating + @game.blue_defender.elo_rating) / 2
   end
 
   def red_average_position_rating
-    @red_average_position_rating ||= BigDecimal.new(@game.red_attacker.elo_rating_attacker + @game.red_defender.elo_rating_defender) / 2
+    @red_average_position_rating ||= BigDecimal(@game.red_attacker.elo_rating_attacker + @game.red_defender.elo_rating_defender) / 2
   end
 
   def blue_average_position_rating
-    @blue_average_position_rating ||= BigDecimal.new(@game.blue_attacker.elo_rating_attacker + @game.blue_defender.elo_rating_defender) / 2
+    @blue_average_position_rating ||= BigDecimal(@game.blue_attacker.elo_rating_attacker + @game.blue_defender.elo_rating_defender) / 2
   end
 
-  def expected_player_score(a, b)
-    1 / (1 + 10.pow(((a - b) / 400))) * 2
+  def expected_player_score(score1, score2)
+    1 / (1 + 10.pow(((score1 - score2) / 400))) * 2
   end
 
   def out(team)

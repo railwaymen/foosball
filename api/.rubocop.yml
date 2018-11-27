@@ -13,8 +13,7 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 LineLength:
-  Enabled: true
-  Max: 120
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
