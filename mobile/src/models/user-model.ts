@@ -2,7 +2,7 @@ import { IUser } from './../pages/game/game.interfaces';
 
 export class UserModel implements IUser {
 
-  public constructor(public id: number, public firstName: string, public lastName: string) {
+  public constructor(public id: number, public firstName: string, public lastName: string, public team?: string, public position?: string) {
 
   }
 

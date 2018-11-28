@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { GroupsPage } from '../pages/groups/groups';
+import { GameListPage } from '../pages/game-list/game-list';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,6 +30,11 @@ export class MyApp {
 
   public openHomePage(): void {
     this.nav.setRoot(HomePage);
+    this.menuCtrl.close();
+  }
+
+  public showGameList(){
+    this.nav.setRoot(GameListPage);
     this.menuCtrl.close();
   }
 }

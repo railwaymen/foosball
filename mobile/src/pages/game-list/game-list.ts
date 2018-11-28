@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, InfiniteScroll } from 'ionic-angular';
 import { GamesProvider } from '../../providers/games/games';
+import { GamePage } from '../game/game';
+import { UserModel } from '../../models/user-model';
+import { IGame } from './game-list.interfaces';
+
+import _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -9,21 +14,29 @@ import { GamesProvider } from '../../providers/games/games';
 })
 
 export class GameListPage {
-  public games: Array<any>=[];
+  public games: Array<IGame> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public gamesProvider: GamesProvider) {
+  public constructor(public navCtrl: NavController, public navParams: NavParams, public gamesProvider: GamesProvider) {
   }
 
-  ionViewDidLoad() {
-  }
-
-  ionViewWillEnter() {
-    this.gamesProvider.resetList()
+  public ionViewWillEnter(): void {
+    this.gamesProvider.resetList();
     this.gamesProvider.loadList();
     this.games = [];
   }
 
-  doInfinite(infiniteScroll) {
+  public doInfinite(infiniteScroll: InfiniteScroll): void {
     this.gamesProvider.loadMore(infiniteScroll);
+  }
+
+  public playAgain(game: IGame): void {
+    const players = _.map(game.players, (p) => {
+      const player = new UserModel(p.id, p.first_name, p.last_name);
+      player.team = p.team;
+      player.position = p.position;
+
+      return player;
+    });
+    this.navCtrl.push(GamePage, { players: players });
   }
 }

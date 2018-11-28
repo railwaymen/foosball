@@ -19,10 +19,10 @@
         <ion-card>
           <ion-card-content>
             <ion-row>
-              <ion-col col-6>
-                <h1>
+              <ion-col col-5>
+                <h2>
                   Red: {{ game.red_score }}
-                </h1>
+                </h2>
                 <p>
                   <ion-icon name='football'></ion-icon>
                   {{ game.findPlayer('red', 'attacker') }}
@@ -32,10 +32,14 @@
                   {{ game.findPlayer('red', 'defender') }}
                 </p>
               </ion-col>
-              <ion-col col-6>
-                <h1>
+              <ion-col col-2>
+                <ion-datetime displayFormat="YYYY-MM-DD HH:mm" [(ngModel)]="game.created_at"></ion-datetime>
+                <button ion-button round (touchstart)="playAgain(game)">Play again</button>
+              </ion-col>
+              <ion-col col-5>
+                <h2>
                   Blue: {{game.blue_score}}
-                </h1>
+                </h2>
                 <p>
                   <ion-icon name='football'></ion-icon>
                   {{ game.findPlayer('blue', 'attacker') }}

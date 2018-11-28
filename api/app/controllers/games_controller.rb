@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   PAGINATE_PER = 10
 
   def index
-    @games = Game.all.includes(games_players: :player)
+    @games = Game.all.includes(games_players: :player).order(created_at: :desc)
     @games = @games.page(params['page']).per(PAGINATE_PER) if params['page'].present?
   end
 
