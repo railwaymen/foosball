@@ -10,4 +10,6 @@ class Game < ApplicationRecord
   has_many :games_players, dependent: :destroy
 
   accepts_nested_attributes_for :games_players, reject_if: :all_blank
+
+  validates :red_score, :blue_score, presence: true
 end

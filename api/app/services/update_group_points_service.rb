@@ -24,7 +24,7 @@ class UpdateGroupPointsService
 
   def update_groups_teams(team, color)
     team.played += 1
-    team.points += 1 if winner(team)
+    team.points += 1 if winner(color)
     team.goal_difference += goal_difference(color)
     team.goals_against += goals_against(color)
     team.goals_for += goals_for(color)
