@@ -1,5 +1,4 @@
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
-import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
 import { GamesProvider } from '../../providers/games/games';
 import { ISwipeEvent, IAlertMessage, IScore, IGamePlayer, IGameHistory, IOnGoalInfo } from './game.interfaces';
@@ -17,15 +16,16 @@ export class GamePage {
 
   public score: IScore;
   public players: Array<UserModel> = [];
-  public groupedPlayers: Dictionary<Array<UserModel>>;
+  public blueDefender: UserModel;
+  public blueAttacker: UserModel;
+  public redDefender: UserModel;
+  public redAttacker: UserModel;
   public startedAt: Date;
   public finishedAt: Date;
-  public goals: Object;
   public goalsHistory: IGameHistory;
   public scoreFreezed: boolean = false;
   public groupId: number;
   public leaderId: number;
-  public leaderGoalsCount: number;
 
   public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, private readonly alertCtrl: AlertController, public navParams: NavParams, public gamesProvider: GamesProvider) {
     this.score = {
@@ -33,23 +33,19 @@ export class GamePage {
       red: 0
     };
 
-    this.leaderGoalsCount = 0;
     this.players = navParams.get('players');
     this.groupId = navParams.get('groupId');
     this.gameUpTo = this.groupId == null ? 10 : 7;
-    this.groupedPlayers = _.groupBy(this.players, 'team');
+
+    this.blueDefender = _.find(this.players, {team: 'blue', position: 'defender'});
+    this.blueAttacker = _.find(this.players, {team: 'blue', position: 'attacker'});
+    this.redDefender = _.find(this.players, {team: 'red', position: 'defender'});
+    this.redAttacker = _.find(this.players, {team: 'red', position: 'attacker'});
+
     this.startedAt = new Date();
-    this.goals = {};
-    _.each(this.players, player =>
-      this.goals[player.id] = 0
-     );
     this.goalsHistory = {
       blue: [],
-      red: [],
-      own: {
-        blue: [],
-        red: []
-      }
+      red: []
     };
   }
 
@@ -58,46 +54,20 @@ export class GamePage {
 
     this.addGoal(info.player, info.own);
     this.setCurrentLeader();
-
-    if (this.score.red === this.gameUpTo || this.score.blue === this.gameUpTo) {
-      const winningTeam: string = this.score.red > this.score.blue ? 'red' : 'blue';
-      this.presentAlert('endGameInfo', winningTeam);
-    }
   }
 
   public isFinish(): boolean {
     return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo;
   }
 
-  public getAllPlayerGoalsCount(player: UserModel): number {
-
-    return this.goals[player.id];
-  }
-
-  public getPositivePlayerGoals(player: UserModel): number {
-    return this.goals[player.id] - this.getSpecificPlayerGoalsCount(player, true);
-  }
-
-  public getSpecificPlayerGoalsCount(player: UserModel, own: boolean = false): number {
-    let result = 0;
-    const ownGoalsStorage = own ? this.goalsHistory.own[player.team] : this.goalsHistory[player.team];
-    ownGoalsStorage.forEach(element => {
-      if (Number(element) === player.id) result++;
-    });
-
-    return result;
-  }
-
   public setCurrentLeader(): void {
-    const maxVal = _.max(_.values(this.goals));
-    this.leaderId = parseInt(_.keys(this.goals).find(key => this.goals[key] === maxVal));
+    this.leaderId = _.maxBy(this.playersResult(), 'gols').player_id;
   }
 
   private addGoal(player: UserModel, own: boolean = false): void {
     const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
     this.score[teamToAddPoint]++;
-    this.goalsHistory[teamToAddPoint].push(player.id);
-    this.goals[player.id]++;
+    this.goalsHistory[teamToAddPoint].push(player);
   }
 
   private getOpponentTeamName(team: string): string {
@@ -105,9 +75,8 @@ export class GamePage {
   }
 
   private reduceGoal(team: string): void {
-    const playerId = this.goalsHistory[team].pop();
-    this.goals[playerId] -= 1;
     if (this.score[team] < 1) return;
+    this.goalsHistory[team].pop();
     this.score[team] -= 1;
   }
 
@@ -126,26 +95,30 @@ export class GamePage {
         title: 'Oops',
         subTitle: 'Something went wrong',
         buttons: ['Ok']
-      }),
-      endGameInfo: this.alertCtrl.create({
-        title: 'Game Over',
-        subTitle: `Team ${winingTeam} wins!`,
-        buttons: ['Ok']
-      }),
+      })
     };
     messages[type].present();
+  }
+
+  private goalsFor(player: UserModel): number{
+    return _.filter(this.goalsHistory[player.team], { id: player.id }).length;
+  }
+
+  private ownGoalsFor(player: UserModel): number{
+    const oppositeTeam = this.getOpponentTeamName(player.team);
+
+    return _.filter(this.goalsHistory[oppositeTeam], { id: player.id }).length;
   }
 
   public playersResult(): Array<IGamePlayer>{
     const results = [];
     _.each(this.players, player => {
-      const oppositeTeam = this.getOpponentTeamName(player.team);
       results.push({
         player_id: player.id,
         team: player.team,
         position: player.position,
-        gols: _.countBy(this.goalsHistory[player.team])[player.id] || 0,
-        own_gols: _.countBy(this.goalsHistory[oppositeTeam])[player.id] || 0
+        gols: this.goalsFor(player),
+        own_gols: this.ownGoalsFor(player)
       });
     });
 
@@ -201,10 +174,10 @@ export class GamePage {
     });
     loading.present();
     this.gamesProvider.save({
-      red_attacker_id: this.groupedPlayers.red[0].id,
-      red_defender_id: this.groupedPlayers.red[1].id,
-      blue_attacker_id: this.groupedPlayers.blue[0].id,
-      blue_defender_id: this.groupedPlayers.blue[1].id,
+      red_attacker_id: this.redAttacker.id,
+      red_defender_id: this.redDefender.id,
+      blue_attacker_id: this.blueAttacker.id,
+      blue_defender_id: this.redDefender.id,
       blue_score: this.score.blue,
       red_score: this.score.red,
       started_at: this.startedAt,

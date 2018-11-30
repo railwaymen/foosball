@@ -9,6 +9,10 @@ import { Slides } from 'ionic-angular';
 export class PlayerGoalSliderComponent {
   @Input('player') public player: IUserPlayer;
   @Input('leaderId') private readonly leaderId: number;
+  /* tslint:disable:no-unused-variable */
+  @Input('goals') private readonly goals: number;
+  @Input('own_goals') private readonly own_goals: number;
+  /* tslint:enable:no-unused-variable */
   @Input('direction') private readonly direction: string;
   @Output() private readonly scored:EventEmitter<{player: IUserPlayer, own: boolean}> = new EventEmitter<{player: IUserPlayer, own: boolean}>();
   @ViewChild(Slides) private readonly slides: Slides;

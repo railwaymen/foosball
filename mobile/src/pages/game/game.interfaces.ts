@@ -11,12 +11,8 @@ export interface IUserPlayer extends IUser {
   team: 'blue' | 'red'
 }
 export interface IGameHistory {
-  blue: Array<string>,
-  red: Array<string>,
-  own: {
-    blue: Array<string>,
-    red: Array<string>
-  }
+  blue: Array<UserModel>,
+  red: Array<UserModel>
 }
 export interface IAlertMessage {
   [key: string]: Alert
