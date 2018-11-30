@@ -5,6 +5,83 @@ require 'rails_helper'
 RSpec.describe GamesController, type: :controller do
   describe 'GET #index' do
     it 'returns http 401 when missing token' do
+      get :index, format: :json
+      expect(response).to have_http_status(401)
+    end
+
+    it 'returns http 401 when expired token' do
+      exired_http_login
+      get :index, format: :json
+      expect(response).to have_http_status(401)
+    end
+
+    it 'returns empty array' do
+      http_login
+      get :index, format: :json
+      expect(response).to have_http_status(:success)
+      expect(response.body).to be_json_eql([])
+    end
+
+    it 'returns players in proper order' do
+      player1 = create(:player, first_name: 'First 1', last_name: 'Last 1', email: 'example1@email.com')
+      player2 = create(:player, first_name: 'First 2', last_name: 'Last 2', email: 'example2@email.com')
+      player3 = create(:player, first_name: 'First 3', last_name: 'Last 3', email: 'example3@email.com')
+      player4 = create(:player, first_name: 'First 4', last_name: 'Last 4', email: 'example4@email.com')
+      game = create(:game, :with_games_players, red_attacker: player1, red_defender: player2, blue_attacker: player3,
+                                                blue_defender: player4)
+
+      http_login
+      get :index, format: :json
+      expect(response).to have_http_status(:success)
+      expect(response.body).to be_json_eql([
+        blue_score: 8,
+        red_score: 10,
+        id: game.id,
+        created_at: game.created_at,
+        players: [
+          {
+            email: 'example1@email.com',
+            first_name: 'First 1',
+            gols: 5,
+            last_name: 'Last 1',
+            own_gols: 0,
+            position: 'attaker',
+            team: 'red'
+          },
+          {
+            email: 'example2@email.com',
+            first_name: 'First 2',
+            gols: 5,
+            last_name: 'Last 2',
+            own_gols: 0,
+            position: 'defender',
+            team: 'red'
+          },
+          {
+            email: 'example3@email.com',
+            first_name: 'First 3',
+            gols: 4,
+            last_name: 'Last 3',
+            own_gols: 0,
+            position: 'attaker',
+            team: 'blue'
+          },
+          {
+            email: 'example4@email.com',
+            first_name: 'First 4',
+            gols: 4,
+            last_name: 'Last 4',
+            own_gols: 0,
+            position: 'defender',
+            team: 'blue'
+          }
+        ]
+      ].to_json)
+    end
+  end
+
+  describe 'PUT #create' do
+    it 'returns http 401 when missing token' do
       put :create, format: :json, params: { games: nil }
       expect(response).to have_http_status(401)
     end
