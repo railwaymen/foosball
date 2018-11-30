@@ -16,12 +16,12 @@
     </ion-col>
     <ion-col col-6 class = "user-list">
       <ion-list>
-        <player-goal-slider [leaderId] = 'leaderId' [player]="groupedPlayers.blue[0]" (scored)="onGoal($event)" direction="left"></player-goal-slider>
-        <player-goal-slider [leaderId] = 'leaderId' [player]="groupedPlayers.blue[1]" (scored)="onGoal($event)" direction="left"></player-goal-slider>
+        <player-goal-slider [goals] = 'goalsFor(blueDefender)' [own_goals] = 'ownGoalsFor(blueDefender)' [leaderId] = 'leaderId' [player]="blueDefender" (scored)="onGoal($event)" direction="left"></player-goal-slider>
+        <player-goal-slider [goals] = 'goalsFor(blueAttacker)' [own_goals] = 'ownGoalsFor(blueAttacker)' [leaderId] = 'leaderId' [player]="blueAttacker" (scored)="onGoal($event)" direction="left"></player-goal-slider>
       </ion-list>
       <ion-list>
-        <player-goal-slider [leaderId] = 'leaderId' [player]="groupedPlayers.red[0]" (scored)="onGoal($event)" direction="right"></player-goal-slider>
-        <player-goal-slider [leaderId] = 'leaderId' [player]="groupedPlayers.red[1]" (scored)="onGoal($event)" direction="right"></player-goal-slider>
+        <player-goal-slider [goals] = 'goalsFor(redDefender)' [own_goals] = 'ownGoalsFor(redDefender)' [leaderId] = 'leaderId' [player]="redDefender" (scored)="onGoal($event)" direction="right"></player-goal-slider>
+        <player-goal-slider [goals] = 'goalsFor(redAttacker)' [own_goals] = 'ownGoalsFor(redAttacker)' [leaderId] = 'leaderId' [player]="redAttacker" (scored)="onGoal($event)" direction="right"></player-goal-slider>
       </ion-list>
     </ion-col>
     <ion-col text-left (swipe)="swipeRed($event)">

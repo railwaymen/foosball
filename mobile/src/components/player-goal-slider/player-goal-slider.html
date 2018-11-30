@@ -6,10 +6,14 @@
     <ion-card [ngClass] = "{leader: isLeader(player)}">
       <ion-card-content>
         <ion-icon (touchend)="goalTouched('left')" [name]="player.team === 'red' ? 'arrow-dropleft' : 'arrow-dropleft-circle'"></ion-icon>
+        <span *ngIf="player.team === 'blue'" ><b>({{ goals }})</b></span>
+        <span *ngIf="player.team === 'red'" >({{ own_goals }})</span>
         {{player.name()}}
         <ion-icon name="shirt" [ngClass] ="'shirt-' + player.team"></ion-icon>
         <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
         <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
+        <span *ngIf="player.team === 'blue'" >({{ own_goals }})</span>
+        <span *ngIf="player.team === 'red'" ><b>({{ goals }})</b></span>
         <ion-icon (touchend)="goalTouched('right')" [name]="player.team === 'blue' ? 'arrow-dropright' : 'arrow-dropright-circle'"></ion-icon>
       </ion-card-content>
     </ion-card>
