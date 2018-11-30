@@ -6,62 +6,6 @@ page-game {
     margin: 0;
     width: 100%;
   }
-  .card-content {
-    display:  flex;
-    align-items:  center;
-    justify-content: center;
-    font-size: 1.8rem;
-    width: 100%;
-    ion-icon[name^=arrow] {
-      font-size: 2em;
-      &[name^=arrow-dropright] {
-        margin-left: auto;
-      }
-      &[name^=arrow-dropleft] {
-        margin-right: auto;
-      }
-    }
-  }
-
-  .player-score {
-    position: absolute;
-    left: 23%;
-    div {
-      font-size: 45px;
-    }
-    .player-own-score {
-      opacity: 0.6;
-      font-size: 22.5px;
-    }
-  }
-  ion-item[data-team^=blue] {
-    ion-icon[name^=arrow]{
-      color: color(team-blue);
-      &[name^=arrow-dropright] {
-        color: color(team-red);
-      }
-    }
-    .player-score {
-        color: color(team-blue);
-      .player-own-score {
-        color: color(team-red);
-      }
-    }
-  }
-  ion-item[data-team^=red] {
-    ion-icon[name^=arrow]{
-      color: color(team-red);
-      &[name^=arrow-dropleft] {
-        color: color(team-blue);
-      }
-    }
-    .player-score {
-      color: color(team-red);
-      .player-own-score {
-        color: color(team-blue);
-      }
-    }
-  }
   .score{
     font-size: 40vw;
   }
@@ -103,34 +47,6 @@ page-game {
       }
       ion-item-sliding {
         margin-top: 20px;
-      }
-
-      .own-goal, .goal {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        z-index: 0;
-        border: none;
-        width: 100%;
-        div {
-          border-radius: 10px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: calc(100% - 25px);
-          width: 100%;
-          color: white;
-          font-size: 20px;
-          font-weight: 800;
-          margin: 0 20px;
-          width: 100%;
-        }
-      }
-      .own-goal div {
-        background: red;
-      }
-      .goal div {
-        background: green;
       }
       .item-inner {
         border: none;

@@ -1,20 +1,20 @@
 <ion-slides initialSlide="1" (ionSlideDidChange)="slideChanged()">
-  <ion-slide>
+  <ion-slide [ngClass] = "player.team === 'red' ? 'goal' : 'own-goal'">
     <h1>{{leftText()}}</h1>
   </ion-slide>
   <ion-slide>
     <ion-card [ngClass] = "{leader: isLeader(player)}">
       <ion-card-content>
-        <ion-icon (touchend)="goalTouched('left')" name="arrow-dropleft"></ion-icon>
+        <ion-icon (touchend)="goalTouched('left')" [name]="player.team === 'red' ? 'arrow-dropleft' : 'arrow-dropleft-circle'"></ion-icon>
         {{player.name()}}
-        <ion-icon name="shirt" class="{{ 'shirt-' + player.team }}"></ion-icon>
+        <ion-icon name="shirt" [ngClass] ="'shirt-' + player.team"></ion-icon>
         <ion-icon *ngIf="player.position === 'defender'" name="body"></ion-icon>
         <ion-icon *ngIf="player.position === 'attacker'" name="football"></ion-icon>
-        <ion-icon (touchend)="goalTouched('right')" name="arrow-dropright-circle"></ion-icon>
+        <ion-icon (touchend)="goalTouched('right')" [name]="player.team === 'blue' ? 'arrow-dropright' : 'arrow-dropright-circle'"></ion-icon>
       </ion-card-content>
     </ion-card>
   </ion-slide>
-  <ion-slide>
+  <ion-slide [ngClass] = "player.team === 'red' ? 'own-goal' : 'goal'">
     <h1>{{rightText()}}</h1>
   </ion-slide>
 </ion-slides>
