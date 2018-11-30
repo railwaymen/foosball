@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_02_123549) do
+ActiveRecord::Schema.define(version: 2018_11_30_095058) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 2018_11_02_123549) do
   create_table "tournaments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", default: ""
   end
 
 end
