@@ -51,7 +51,10 @@ page-home {
 
   .card {
     @extend .swipe-card;
+    position: relative;
+    overflow: hidden;
   }
+
   .grid {
     padding: 50px 0;
     height: 100%;
@@ -66,7 +69,6 @@ page-home {
         height: 100%;
       }
       ion-col {
-        overflow: hidden;
         padding-bottom: 0;
         margin-bottom: 5px;
       }
