@@ -24,15 +24,15 @@
             <ion-row>
               <ion-col col-5>
                 <h2>
-                  Red: {{ game.red_score }}
+                  Blue: {{game.blue_score}}
                 </h2>
                 <p>
-                  <ion-icon name='football'></ion-icon>
-                  {{ game.playerInfo('red', 'attacker') }}
+                  <ion-icon name='body'></ion-icon>
+                  {{ game.playerInfo('blue', 'defender') }}
                 </p>
                 <p>
-                  <ion-icon name='body'></ion-icon>
-                  {{ game.playerInfo('red', 'defender') }}
+                  <ion-icon name='football'></ion-icon>
+                  {{ game.playerInfo('blue', 'attacker') }}
                 </p>
               </ion-col>
               <ion-col col-2>
@@ -41,15 +41,15 @@
               </ion-col>
               <ion-col col-5>
                 <h2>
-                  Blue: {{game.blue_score}}
+                  Red: {{ game.red_score }}
                 </h2>
                 <p>
-                  <ion-icon name='football'></ion-icon>
-                  {{ game.playerInfo('blue', 'attacker') }}
+                  <ion-icon name='body'></ion-icon>
+                  {{ game.playerInfo('red', 'defender') }}
                 </p>
                 <p>
-                  <ion-icon name='body'></ion-icon>
-                  {{ game.playerInfo('blue', 'defender') }}
+                  <ion-icon name='football'></ion-icon>
+                  {{ game.playerInfo('red', 'attacker') }}
                 </p>
               </ion-col>
             </ion-row>

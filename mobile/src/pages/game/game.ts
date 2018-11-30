@@ -1,5 +1,4 @@
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
-import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
 import { GamesProvider } from '../../providers/games/games';
 import { ISwipeEvent, IAlertMessage, IScore, IGamePlayer, IGameHistory, IOnGoalInfo } from './game.interfaces';
@@ -17,7 +16,6 @@ export class GamePage {
 
   public score: IScore;
   public players: Array<UserModel> = [];
-  public groupedPlayers: Dictionary<Array<UserModel>>;
   public blueDefender: UserModel;
   public blueAttacker: UserModel;
   public redDefender: UserModel;
@@ -38,21 +36,16 @@ export class GamePage {
     this.players = navParams.get('players');
     this.groupId = navParams.get('groupId');
     this.gameUpTo = this.groupId == null ? 10 : 7;
-    this.groupedPlayers = _.groupBy(this.players, 'team');
 
-    this.blueDefender = this.groupedPlayers.blue[0];
-    this.blueAttacker = this.groupedPlayers.blue[1];
-    this.redDefender = this.groupedPlayers.red[0];
-    this.redAttacker = this.groupedPlayers.red[1];
+    this.blueDefender = _.find(this.players, {team: 'blue', position: 'defender'});
+    this.blueAttacker = _.find(this.players, {team: 'blue', position: 'attacker'});
+    this.redDefender = _.find(this.players, {team: 'red', position: 'defender'});
+    this.redAttacker = _.find(this.players, {team: 'red', position: 'attacker'});
 
     this.startedAt = new Date();
     this.goalsHistory = {
       blue: [],
-      red: [],
-      own: {
-        blue: [],
-        red: []
-      }
+      red: []
     };
   }
 
@@ -181,10 +174,10 @@ export class GamePage {
     });
     loading.present();
     this.gamesProvider.save({
-      red_attacker_id: this.groupedPlayers.red[0].id,
-      red_defender_id: this.groupedPlayers.red[1].id,
-      blue_attacker_id: this.groupedPlayers.blue[0].id,
-      blue_defender_id: this.groupedPlayers.blue[1].id,
+      red_attacker_id: this.redAttacker.id,
+      red_defender_id: this.redDefender.id,
+      blue_attacker_id: this.blueAttacker.id,
+      blue_defender_id: this.redDefender.id,
       blue_score: this.score.blue,
       red_score: this.score.red,
       started_at: this.startedAt,
