@@ -10,7 +10,7 @@ abstract class BaseMock {
 
   protected spyObj: any;
 
-  public constructor(baseName: string, methodNames: any[]) {
+  public constructor(baseName: string, methodNames: Array<any>) {
       this.spyObj = jasmine.createSpyObj(baseName, methodNames);
 
       methodNames.forEach(methodName => {
@@ -24,19 +24,20 @@ export class AlertControllerMock {
       present: () => {
         return true;
       }
-    }
+    };
+
     return  alertObj;
   }
-  public presentAlert(): Promise<boolean> {
+  public async presentAlert(): Promise<{}> {
 
     return new Promise((resolve) => {
       resolve(true);
-    })
+    });
   }
 
 }
 export class PlatformMock {
-  public ready(): Promise<string> {
+  public async ready(): Promise<{}> {
     return new Promise((resolve) => {
       resolve('READY');
     });
@@ -119,7 +120,7 @@ export class NavMock {
     });
   }
 
-  public push(): any {
+  public async push(): Promise<{}> {
     return new Promise(function(resolve: Function): void {
       resolve();
     });
@@ -143,37 +144,37 @@ export class NavMock {
 
 }
 
-export class UsersProviderMock {
+export class UsersProviderMock extends BaseMock {
   public data: Array<any> = [{
-    "id": 0,
-    "firstName": "Arnold",
-    "lastName": "Boczek"
+    'id': 0,
+    'firstName': 'Arnold',
+    'lastName': 'Boczek'
   },
   {
-    "id": 1,
-    "firstName": "Ferdynand",
-    "lastName": "Kiepski"
+    'id': 1,
+    'firstName': 'Ferdynand',
+    'lastName': 'Kiepski'
   },
   {
-    "id": 2,
-    "firstName": "Marian",
-    "lastName": "Pazdzioch"
+    'id': 2,
+    'firstName': 'Marian',
+    'lastName': 'Pazdzioch'
   },
   {
-    "id": 3,
-    "firstName": "John",
-    "lastName": "Doe"
+    'id': 3,
+    'firstName': 'John',
+    'lastName': 'Doe'
   }];
 
   public endpoint: string;
   public http: Http;
   public tokenProvider: TokenProvider;
 
-  public load(): Promise<Array<UserModel>> {
+  public async load(): Promise<{}> {
 
     this.data = this.data.map((user) => {
       return new UserModel(user.id, user.firstName, user.lastName);
-    })
+    });
 
     return new Promise((resolve: Function) => {
       resolve(this.data);
@@ -184,9 +185,13 @@ export class LoadingControllerMockExtended extends LoadingControllerMock {
   public create(): any {
     return new LoadingControllerMockExtended;
   }
-  public dismiss(): any {}
+  public dismiss(): any {
+    // Mock
+  }
 
-  public present(): any {}
+  public present(): any {
+    // Mock
+  }
 }
 
 export class DeepLinkerMock {
