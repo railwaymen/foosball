@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe GroupsController, type: :controller do
-  let(:tournament) { Tournament.create! }
+  let(:tournament) { create(:tournament) }
 
   describe 'GET #index' do
     it 'returns http 401 when missing token' do

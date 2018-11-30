@@ -23,12 +23,22 @@ RSpec.describe TournamentsController, type: :controller do
     end
 
     it 'returns tournaments' do
-      tournaments = create_list(:tournament, 5)
+      first = create(:tournament)
+      second = create(:tournament)
 
       http_login
       get :index, format: :json
       expect(response).to have_http_status(:success)
-      expect(response.body).to be_json_eql(tournaments.map { |t| { id: t.id, name: t.name } }.to_json)
+      expect(response.body).to be_json_eql([
+        {
+          name: first.name,
+          id: first.id
+        },
+        {
+          name: second.name,
+          id: second.id
+        }
+      ].to_json)
     end
   end
 end
