@@ -6,7 +6,7 @@ export class GameModel {
 
   }
 
-  public findPlayer(team: string, position: string): string {
+  public playerInfo(team: string, position: string): string {
     const player = _.find(this.players, { team: team, position: position });
 
     return !!player ? this.playerName(player) : '';
