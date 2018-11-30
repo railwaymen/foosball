@@ -2,7 +2,8 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
 import { GamesProvider } from '../../providers/games/games';
-import { ISwipeEvent, IAlertMessage, IScore, IUserPlayer, IGamePlayer, IGameHistory, IOnGoalInfo } from './game.interfaces';
+import { ISwipeEvent, IAlertMessage, IScore, IGamePlayer, IGameHistory, IOnGoalInfo } from './game.interfaces';
+import { UserModel } from '../../models/user-model';
 import _ from 'lodash';
 
 @IonicPage()
@@ -12,11 +13,11 @@ import _ from 'lodash';
 })
 
 export class GamePage {
-  private readonly gameUpTo: number = 10;
+  private readonly gameUpTo: number;
 
   public score: IScore;
-  public players: Array<IUserPlayer> = [];
-  public groupedPlayers: Dictionary<Array<IUserPlayer>>;
+  public players: Array<UserModel> = [];
+  public groupedPlayers: Dictionary<Array<UserModel>>;
   public startedAt: Date;
   public finishedAt: Date;
   public goals: Object;
@@ -68,16 +69,16 @@ export class GamePage {
     return this.score.blue >= this.gameUpTo || this.score.red >= this.gameUpTo;
   }
 
-  public getAllPlayerGoalsCount(player: IUserPlayer): number {
+  public getAllPlayerGoalsCount(player: UserModel): number {
 
     return this.goals[player.id];
   }
 
-  public getPositivePlayerGoals(player: IUserPlayer): number {
+  public getPositivePlayerGoals(player: UserModel): number {
     return this.goals[player.id] - this.getSpecificPlayerGoalsCount(player, true);
   }
 
-  public getSpecificPlayerGoalsCount(player: { id: number, team: 'blue' | 'red' }, own: boolean = false): number {
+  public getSpecificPlayerGoalsCount(player: UserModel, own: boolean = false): number {
     let result = 0;
     const ownGoalsStorage = own ? this.goalsHistory.own[player.team] : this.goalsHistory[player.team];
     ownGoalsStorage.forEach(element => {
@@ -92,7 +93,7 @@ export class GamePage {
     this.leaderId = parseInt(_.keys(this.goals).find(key => this.goals[key] === maxVal));
   }
 
-  private addGoal(player: IUserPlayer, own: boolean = false): void {
+  private addGoal(player: UserModel, own: boolean = false): void {
     const teamToAddPoint: string = own ? this.getOpponentTeamName(player.team) : player.team;
     this.score[teamToAddPoint]++;
     this.goalsHistory[teamToAddPoint].push(player.id);
@@ -151,7 +152,49 @@ export class GamePage {
     return results;
   }
 
-  public save(): void {
+  private confirmRematch(): void {
+    const alert = this.alertCtrl.create({
+      title: 'Rematch',
+      message: 'Do you want to play rematch?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => this.closeGame()
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            _.each(this.players, player => player.switchTeam());
+            const currentIndex = this.navCtrl.getActive().index;
+            this.navCtrl.push(GamePage, { players: this.players }).then(() => {
+              this.navCtrl.remove(currentIndex);
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  private afterGameSaved(): void{
+    if (!!this.groupId) {
+      this.closeGame();
+    } else {
+      this.confirmRematch();
+    }
+  }
+
+  private closeGame(): void{
+    if (!!this.groupId) {
+      this.navCtrl.getPrevious().instance.resetTeams();
+      this.viewCtrl.dismiss();
+    } else {
+      this.navCtrl.popToRoot();
+    }
+  }
+
+  public save(): void{
     this.finishedAt = new Date();
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -171,8 +214,7 @@ export class GamePage {
     })
     .then(data => {
       loading.dismiss();
-      this.navCtrl.getPrevious().instance.resetTeams();
-      this.viewCtrl.dismiss();
+      this.afterGameSaved();
     }).catch(error => {
       loading.dismiss();
       this.presentAlert();

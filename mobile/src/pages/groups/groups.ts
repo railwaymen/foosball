@@ -1,4 +1,4 @@
-import { IGroup, IGroupTeam } from './groups.interfaces';
+import { IGroup, IGroupTeam, Team } from './groups.interfaces';
 import { IUser } from './../game/game.interfaces';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
@@ -13,6 +13,7 @@ import _ from 'lodash';
   selector: 'page-groups',
   templateUrl: 'groups.html',
 })
+
 export class GroupsPage {
 
   public groups: Array<IGroup> = [];
@@ -26,6 +27,7 @@ export class GroupsPage {
   public ionViewWillEnter(): void {
     this.players = [];
     this.groupsProvider.load();
+    this.resetTeams();
   }
 
   public addTeam(team: IGroupTeam, group: IGroup): void {
@@ -55,14 +57,14 @@ export class GroupsPage {
   }
 
   public play(): void {
-    const randomColors = _.shuffle(['red', 'blue']);
+    const randomColors: Array<Team> = _.shuffle(['red', 'blue']) as Array<Team>;
     _.each(this.selectedTeams, (team, i) => {
       this.prepareTeamPlayers(team, randomColors[i]);
     });
     this.navCtrl.push(GamePage, { players: this.players, groupId: this.selectedGroupId });
   }
 
-  public prepareTeamPlayers(team: IGroupTeam, color: string): void {
+  public prepareTeamPlayers(team: IGroupTeam, color: Team): void {
     const attacker: IUser = new UserModel(team.attacker_id, team.attacker_first_name, team.attacker_last_name);
     attacker['team'] = color;
     attacker['position'] = 'attacker';

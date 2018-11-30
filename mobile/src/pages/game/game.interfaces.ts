@@ -1,4 +1,5 @@
 import { Alert } from 'ionic-angular';
+import { UserModel } from '../../models/user-model';
 
 export interface IUser {
   firstName: string,
@@ -31,7 +32,7 @@ export interface ISwipeEvent {
 
 export interface IOnGoalInfo {
   own: boolean,
-  player: IUserPlayer
+  player: UserModel
 }
 
 export interface IGame {

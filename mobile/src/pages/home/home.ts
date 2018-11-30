@@ -5,7 +5,7 @@ import { GamePage } from '../game/game';
 import { UsersProvider } from '../../providers/users/users';
 
 import _ from 'lodash';
-import { IUserPlayer } from '../game/game.interfaces';
+import { UserModel } from '../../models/user-model';
 
 @Component({
   selector: 'page-home',
@@ -14,8 +14,8 @@ import { IUserPlayer } from '../game/game.interfaces';
 })
 export class HomePage {
 
-  public users: Dictionary<Array<IUserPlayer>>;
-  public players: Array<IUserPlayer> = [];
+  public users: Dictionary<Array<UserModel>>;
+  public players: Array<UserModel> = [];
   public teams: Array<'blue' | 'red'> = [];
   public positions: Array<'defender' | 'attacker'> = [];
 
@@ -59,6 +59,10 @@ export class HomePage {
     alert.present();
   }
 
+  public ionViewWillEnter(): void{
+    this.resetTeams();
+  }
+
   public async loadUsers(): Promise<{}> {
     return this.usersProvider.load()
     .then(data => {
@@ -74,7 +78,7 @@ export class HomePage {
     return _.size(this.players) >= 4;
   }
 
-  public addPlayer(user: IUserPlayer): void {
+  public addPlayer(user: UserModel): void {
     if (this.isPlayer(user)){
       this.removePlayer(user);
     } else if (!this.isTeamCompleted()){
@@ -105,15 +109,15 @@ export class HomePage {
     }
   }
 
-  public playerInfo(user: IUserPlayer): string {
+  public playerInfo(user: UserModel): string {
     const player = this.findPlayer(user);
     if (player)
 
       return `${player.position}`;
   }
 
-  public removePlayer(user: IUserPlayer): void {
-    _.remove(this.players, function(player: IUserPlayer): boolean {
+  public removePlayer(user: UserModel): void {
+    _.remove(this.players, function(player: UserModel): boolean {
 
       return player.id === user.id;
     });
@@ -124,22 +128,22 @@ export class HomePage {
     return _.size(this.players);
   }
 
-  public findPlayer(user: IUserPlayer): IUserPlayer {
+  public findPlayer(user: UserModel): UserModel {
 
-    return _.find(this.players, function(player: IUserPlayer): boolean { return player.id === user.id; });
+    return _.find(this.players, function(player: UserModel): boolean { return player.id === user.id; });
   }
 
-  public isPlayer(user: IUserPlayer): boolean {
+  public isPlayer(user: UserModel): boolean {
     return !_.isEmpty(this.findPlayer(user));
   }
 
-  public isDefender(user: IUserPlayer): boolean {
+  public isDefender(user: UserModel): boolean {
     const player = this.findPlayer(user);
 
     return player && player.position === 'defender';
   }
 
-  public isAttacker(user: IUserPlayer): boolean {
+  public isAttacker(user: UserModel): boolean {
     const player = this.findPlayer(user);
 
     return player && player.position === 'attacker';
