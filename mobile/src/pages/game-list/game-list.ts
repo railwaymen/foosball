@@ -4,6 +4,7 @@ import { GamesProvider } from '../../providers/games/games';
 import { GamePage } from '../game/game';
 import { UserModel } from '../../models/user-model';
 import { IGame } from './game-list.interfaces';
+import { Team } from '../groups/groups.interfaces';
 
 import _ from 'lodash';
 
@@ -32,7 +33,7 @@ export class GameListPage {
   public playAgain(game: IGame): void {
     const players = _.map(game.players, (p) => {
       const player = new UserModel(p.id, p.first_name, p.last_name);
-      player.team = p.team;
+      player.team = p.team as Team;
       player.position = p.position;
 
       return player;
