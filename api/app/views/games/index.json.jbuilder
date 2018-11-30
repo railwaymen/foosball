@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @games do |game|
   json.extract! game, :id, :red_score, :blue_score, :created_at
   json.players game.games_players do |games_player|

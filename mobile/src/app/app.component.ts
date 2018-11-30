@@ -33,7 +33,7 @@ export class MyApp {
     this.menuCtrl.close();
   }
 
-  public showGameList(){
+  public showGameList(): void{
     this.nav.setRoot(GameListPage);
     this.menuCtrl.close();
   }

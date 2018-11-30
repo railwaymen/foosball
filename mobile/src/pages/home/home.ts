@@ -2,7 +2,6 @@ import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController, Refresher } from 'ionic-angular';
 import { GamePage } from '../game/game';
-import { GroupsPage } from '../groups/groups';
 import { UsersProvider } from '../../providers/users/users';
 
 import _ from 'lodash';
