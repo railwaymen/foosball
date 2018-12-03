@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe AssignTeamsService do
   describe '#call' do
-    let(:tournament) { Tournament.create! }
+    let(:tournament) { create(:tournament) }
     let(:teams_count) { 4 }
 
     before do

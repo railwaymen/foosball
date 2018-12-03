@@ -6,4 +6,6 @@ class Tournament < ApplicationRecord
   has_many :groups, dependent: :destroy
 
   has_many :players, through: :tournament_players
+
+  validates :name, presence: true
 end

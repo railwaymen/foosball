@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Tournaments</ion-title>
+  </ion-navbar>
+</ion-header>
+
+ <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+   <ion-grid text-center>
+    <ion-row>
+      <ion-col col-4 *ngFor="let tournament of tournaments">
+        <ion-card>
+            <ion-card-content>
+              {{tournament.name}}
+            </ion-card-content>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

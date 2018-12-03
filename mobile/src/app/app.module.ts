@@ -20,6 +20,9 @@ import { TokenProvider } from '../providers/token/token';
 import { UsersProvider } from '../providers/users/users';
 import { GamesProvider } from '../providers/games/games';
 import { GroupsProvider } from '../providers/groups/groups';
+import { TournamentsProvider } from '../providers/tournaments/tournaments';
+import { TournamentsPage } from '../pages/tournaments/tournaments';
+import { TournamentsPageModule } from '../pages/tournaments/tournaments.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { GroupsProvider } from '../providers/groups/groups';
     GamePageModule,
     GameListPageModule,
     GroupsPageModule,
+    TournamentsPageModule,
     UserDetailPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -43,13 +47,15 @@ import { GroupsProvider } from '../providers/groups/groups';
     UserDetailPage,
     GamePage,
     GameListPage,
-    GroupsPage
+    GroupsPage,
+    TournamentsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TokenProvider,
+    TournamentsProvider,
     UsersProvider,
     GamesProvider,
     GroupsProvider

@@ -2,5 +2,8 @@
 
 FactoryBot.define do
   factory :tournament do
+    sequence :name do |n|
+      "Tournament ##{n}"
+    end
   end
 end
