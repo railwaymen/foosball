@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { GroupsPage } from '../pages/groups/groups';
 import { GameListPage } from '../pages/game-list/game-list';
 import { TournamentsPage } from '../pages/tournaments/tournaments';
 
@@ -22,11 +21,6 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-  }
-
-  public openGroupsPage(): void {
-    this.nav.setRoot(GroupsPage);
-    this.menuCtrl.close();
   }
 
   public openHomePage(): void {

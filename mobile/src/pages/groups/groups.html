@@ -3,7 +3,7 @@
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
-    <ion-title>Groups</ion-title>
+    <ion-title>{{tournament.name}} | Groups</ion-title>
     <ion-buttons end>
       <button *ngIf="isCompleted()" ion-button icon-only (touchstart)="play()"><ion-icon name="play"></ion-icon></button>
     </ion-buttons>
