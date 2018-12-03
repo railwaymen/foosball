@@ -6,18 +6,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoadingControllerMock } from 'ionic-mocks';
 import { UserModel } from '../../models/user-model';
 
-abstract class BaseMock {
+// abstract class BaseMock {
 
-  protected spyObj: any;
+//   protected spyObj: any;
 
-  public constructor(baseName: string, methodNames: Array<any>) {
-      this.spyObj = jasmine.createSpyObj(baseName, methodNames);
+//   public constructor(baseName: string, methodNames: Array<any>) {
+//       this.spyObj = jasmine.createSpyObj(baseName, methodNames);
 
-      methodNames.forEach(methodName => {
-          this[methodName] = this.spyObj[methodName];
-      });
-  }
-}
+//       methodNames.forEach(methodName => {
+//           this[methodName] = this.spyObj[methodName];
+//       });
+//   }
+// }
 export class AlertControllerMock {
   public create(): Object {
     const alertObj = {
@@ -144,7 +144,7 @@ export class NavMock {
 
 }
 
-export class UsersProviderMock extends BaseMock {
+export class UsersProviderMock {
   public data: Array<any> = [{
     'id': 0,
     'firstName': 'Arnold',
