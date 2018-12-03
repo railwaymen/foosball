@@ -3,6 +3,7 @@ import { Dictionary } from 'underscore';
 import { NavController, LoadingController, AlertController, Refresher } from 'ionic-angular';
 import { TournamentsProvider } from '../../providers/tournaments/tournaments';
 import { ITournament } from './tournaments.interface';
+import { GroupsPage } from '../groups/groups';
 @Component({
   selector: 'page-tournaments',
   templateUrl: 'tournaments.html',
@@ -50,5 +51,8 @@ export class TournamentsPage {
     .then(data => {
       return data;
     });
+  }
+  public showGroups(tournament : ITournament) : void {
+    this.navCtrl.push(GroupsPage, { tournament: tournament });
   }
 }

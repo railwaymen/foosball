@@ -18,7 +18,7 @@
   </ion-refresher>
    <ion-grid text-center>
     <ion-row>
-      <ion-col col-4 *ngFor="let tournament of tournaments">
+      <ion-col col-4 *ngFor="let tournament of tournaments" (tap)="showGroups(tournament)">
         <ion-card>
             <ion-card-content>
               {{tournament.name}}

@@ -1,5 +1,6 @@
 import { IGroup, IGroupTeam, Team } from './groups.interfaces';
 import { IUser } from './../game/game.interfaces';
+import { ITournament } from './../tournaments/tournaments.interface';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { GroupsProvider } from '../../providers/groups/groups';
@@ -20,13 +21,15 @@ export class GroupsPage {
   public selectedTeams: Array<IGroupTeam> = [];
   public selectedGroupId: number;
   public players: Array<IUser>;
+  public tournament: ITournament;
 
   public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public viewCtrl: ViewController, public navParams: NavParams, public groupsProvider: GroupsProvider) {
+    this.tournament = navParams.get('tournament');
   }
 
   public ionViewWillEnter(): void {
     this.players = [];
-    this.groupsProvider.load();
+    this.groupsProvider.load(this.tournament.id);
     this.resetTeams();
   }
 
