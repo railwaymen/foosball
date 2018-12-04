@@ -116,6 +116,15 @@ describe('Component: Home', () => {
     expect(component.addPlayer).toHaveBeenCalled();
   }));
 
+  it ('Triggers groups view', fakeAsync(() => {
+    const groupsButton = fixture.debugElement.query(By.css('ion-buttons button:last-of-type'));
+    spyOn(component, 'showGroups');
+    groupsButton.triggerEventHandler('touchstart', null);
+    tick();
+    fixture.detectChanges();
+    expect(component.showGroups).toHaveBeenCalled();
+  }));
+
   it ('Toggles player presence in queue array', () => {
     component.addPlayer(component.users[0]);
     expect(component.players.length).toBe(1);
