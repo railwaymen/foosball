@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  port: 5432
+  host: localhost
+  min_messages: notice
+  username: postgres_user
+  password: 'password'
+
+development:
+  <<: *default
+  database: foosball_dev
+
+test:
+  <<: *default
+  database: foosball_dev_test
