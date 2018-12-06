@@ -14,8 +14,8 @@ export class GameModel {
 
   public playerName(player: IPlayer): string {
     const name = `${player.first_name} ${player.last_name}`;
-    const gols = player.own_gols > 0 ? `${player.gols} (-${player.own_gols})` : `${player.gols}`;
+    const goals = player.own_goals > 0 ? `${player.goals} (-${player.own_goals})` : `${player.goals}`;
 
-    return `${name} ${gols}`;
+    return `${name} ${goals}`;
   }
 }

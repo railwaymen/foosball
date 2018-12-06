@@ -61,7 +61,7 @@ export class GamePage {
   }
 
   public setCurrentLeader(): void {
-    this.leaderId = _.maxBy(this.playersResult(), 'gols').player_id;
+    this.leaderId = _.maxBy(this.playersResult(), 'goals').player_id;
   }
 
   private addGoal(player: UserModel, own: boolean = false): void {
@@ -117,8 +117,8 @@ export class GamePage {
         player_id: player.id,
         team: player.team,
         position: player.position,
-        gols: this.goalsFor(player),
-        own_gols: this.ownGoalsFor(player)
+        goals: this.goalsFor(player),
+        own_goals: this.ownGoalsFor(player)
       });
     });
 

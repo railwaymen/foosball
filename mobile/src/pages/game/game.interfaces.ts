@@ -48,6 +48,6 @@ export interface IGamePlayer {
   player_id: number,
   team: string,
   position: string,
-  gols: number,
-  own_gols: number
+  goals: number,
+  own_goals: number
 }

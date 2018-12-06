@@ -42,36 +42,36 @@ RSpec.describe GamesController, type: :controller do
           {
             email: 'example1@email.com',
             first_name: 'First 1',
-            gols: 5,
+            goals: 5,
             last_name: 'Last 1',
-            own_gols: 0,
+            own_goals: 0,
             position: 'attaker',
             team: 'red'
           },
           {
             email: 'example2@email.com',
             first_name: 'First 2',
-            gols: 5,
+            goals: 5,
             last_name: 'Last 2',
-            own_gols: 0,
+            own_goals: 0,
             position: 'defender',
             team: 'red'
           },
           {
             email: 'example3@email.com',
             first_name: 'First 3',
-            gols: 4,
+            goals: 4,
             last_name: 'Last 3',
-            own_gols: 0,
+            own_goals: 0,
             position: 'attaker',
             team: 'blue'
           },
           {
             email: 'example4@email.com',
             first_name: 'First 4',
-            gols: 4,
+            goals: 4,
             last_name: 'Last 4',
-            own_gols: 0,
+            own_goals: 0,
             position: 'defender',
             team: 'blue'
           }
@@ -102,10 +102,10 @@ RSpec.describe GamesController, type: :controller do
         red_attacker_id: player4.id, red_defender_id: player3.id, red_score: 7,
         started_at: '2018-11-28T16:24:38', finished_at: '2018-11-28T16:25:03',
         games_players_attributes: [
-          { gols: 4, own_gols: 1, player_id: player1.id, position: 'defender', team: 'blue' },
-          { gols: 3, own_gols: 1, player_id: player2.id, position: 'attacker', team: 'blue' },
-          { gols: 2, own_gols: 2, player_id: player3.id, position: 'defender', team: 'red' },
-          { gols: 3, own_gols: 1, player_id: player4.id, position: 'attacker', team: 'red' }
+          { goals: 4, own_goals: 1, player_id: player1.id, position: 'defender', team: 'blue' },
+          { goals: 3, own_goals: 1, player_id: player2.id, position: 'attacker', team: 'blue' },
+          { goals: 2, own_goals: 2, player_id: player3.id, position: 'defender', team: 'red' },
+          { goals: 3, own_goals: 1, player_id: player4.id, position: 'attacker', team: 'red' }
         ]
       }
 

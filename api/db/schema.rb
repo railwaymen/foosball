@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_30_095058) do
+ActiveRecord::Schema.define(version: 2018_12_06_094855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
     t.bigint "game_id", null: false
     t.string "team", null: false
     t.string "position", null: false
-    t.integer "gols", null: false
-    t.integer "own_gols", null: false
+    t.integer "goals", null: false
+    t.integer "own_goals", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_games_players_on_game_id"
