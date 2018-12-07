@@ -133,10 +133,12 @@ export class GamePage {
         {
           text: 'No',
           role: 'cancel',
+          cssClass: 'alert-ctrl-button',
           handler: () => this.closeGame()
         },
         {
           text: 'Yes',
+          cssClass: 'alert-ctrl-button',
           handler: () => {
             _.each(this.players, player => player.switchTeam());
             const currentIndex = this.navCtrl.getActive().index;
