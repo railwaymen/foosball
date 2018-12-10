@@ -1,34 +1,29 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { TournamentModel } from '../../models/tournament-model';
 import { ENV } from '@app/env';
-import { TokenProvider } from '../token/token';
 
 @Injectable()
 export class TournamentsProvider {
 
-  private data: Array<TournamentModel> = [];
+  private _data: Array<TournamentModel> = [];
   private readonly endpoint: string;
 
-  public constructor(public http: Http, public tokenProvider: TokenProvider) {
+  public constructor(public http: HttpClient) {
     this.endpoint = `${ENV.API_URL}/tournaments.json`;
   }
-
   public async load(): Promise<{}> {
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.endpoint}`, this.tokenProvider.requestOptions())
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = [];
-          for (const row of data) {
-            this.data.push(
+      this.http.get(`${this.endpoint}`)
+        .subscribe((data) => {
+          this._data = [];
+          for (const row of data as Array<TournamentModel>) {
+            this._data.push(
               new TournamentModel(row.id, row.name)
             );
           }
-          resolve(this.data);
+          resolve(data);
         }, err => reject(err));
     });
   }
-
 }

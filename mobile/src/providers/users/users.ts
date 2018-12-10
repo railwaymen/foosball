@@ -1,32 +1,33 @@
-import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import { Http } from '@angular/http';
-import {UserModel} from '../../models/user-model';
 import { ENV } from '@app/env';
-import { TokenProvider } from '../token/token';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UserModel } from '../../models/user-model';
+import { IUserApi } from 'pages/game/game.interfaces';
 
 @Injectable()
 export class UsersProvider {
 
-  private data: Array<UserModel> = [];
-  private readonly endpoint: string;
+  private _data: Array<UserModel>;
+  public endpoint: string;
 
-  public constructor(public http: Http, public tokenProvider: TokenProvider) {
+  public constructor(public http: HttpClient) {
     this.endpoint = `${ENV.API_URL}/players.json`;
   }
 
   public async load(): Promise<{}> {
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.endpoint}`, this.tokenProvider.requestOptions())
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = [];
-          for (const row of data) {
-            this.data.push(
-              new UserModel(row.id, row.first_name, row.last_name, row.elo_rating, row.elo_rating_defender, row.elo_rating_attacker)
+      this.http.get(`${this.endpoint}`)
+        .subscribe((data) => {
+          this._data = [];
+          for (const row of data as Array<IUserApi>) {
+
+            this._data.push(
+              new UserModel(row.id, row.first_name, row.last_name)
             );
           }
-          resolve(this.data);
+          resolve(this._data);
+
+          return this._data;
         }, err => reject(err));
     });
   }

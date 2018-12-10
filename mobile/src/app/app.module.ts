@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,7 +16,6 @@ import { GameListPage } from '../pages/game-list/game-list';
 import { GameListPageModule } from '../pages/game-list/game-list.module';
 import { GroupsPage } from '../pages/groups/groups';
 import { GroupsPageModule } from '../pages/groups/groups.module';
-import { TokenProvider } from '../providers/token/token';
 import { UsersProvider } from '../providers/users/users';
 import { GamesProvider } from '../providers/games/games';
 import { GroupsProvider } from '../providers/groups/groups';
@@ -26,6 +25,8 @@ import { TournamentsPageModule } from '../pages/tournaments/tournaments.module';
 import { RankingPage } from '../pages/ranking/ranking';
 import { RankingPageModule } from '../pages/ranking/ranking.module';
 import { UserInfoComponent } from '../components/user-info/user-info';
+import { AuthService } from '../auth/auth.service';
+import { TokenInterceptor } from '../auth/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { UserInfoComponent } from '../components/user-info/user-info';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     GamePageModule,
     GameListPageModule,
     GroupsPageModule,
@@ -57,14 +58,20 @@ import { UserInfoComponent } from '../components/user-info/user-info';
     UserInfoComponent
   ],
   providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TokenProvider,
     TournamentsProvider,
     UsersProvider,
     GamesProvider,
-    GroupsProvider
+    GroupsProvider,
+    HttpClient
   ]
 })
 export class AppModule {}
