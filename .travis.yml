@@ -9,6 +9,8 @@ matrix:
         - cd api
       before_script:
         - bundle exec rake db:create
+      env:
+        - DB_USERNAME=postgres DB_DATABASE=foosball_ci DB_HOST=localhost DB_PASSWORD=''
 
     - language: node_js
       node_js:

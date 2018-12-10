@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  port: 5432
+  host: <%= ENV['DB_HOST'] %>
+  min_messages: notice
+  username: <%= ENV['DB_USERNAME'] %>
+  password: "<%= ENV['DB_PASSWORD'] %>"
+
+
+development:
+  <<: *default
+  database: <%= ENV['DB_DATABASE'] %>
+
+test:
+  <<: *default
+  database: foosball_dev_test
