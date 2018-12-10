@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 export class UserModel implements IUser {
 
-  public constructor(public id: number, public firstName: string, public lastName: string, public team?: 'blue' | 'red', public position?: string){
+  public constructor(public id: number, public firstName: string, public lastName: string, public elo_rating?: number, public elo_rating_defender?: number, public elo_rating_attacker?: number, public team?: 'blue' | 'red', public position?: string){
 
   }
 

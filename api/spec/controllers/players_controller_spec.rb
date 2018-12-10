@@ -35,31 +35,49 @@ RSpec.describe PlayersController, type: :controller do
       expect(response).to have_http_status(:success)
       expect(response.body).to be_json_eql([
         {
+          "elo_rating": 1200,
+          "elo_rating_attacker": 1200,
+          "elo_rating_defender": 1200,
           "email": 'example.bw2@email.com',
           "first_name": 'B',
           "last_name": 'W'
         },
         {
+          "elo_rating": 1200,
+          "elo_rating_attacker": 1200,
+          "elo_rating_defender": 1200,
           "email": 'example.ca2@email.com',
           "first_name": 'C',
           "last_name": 'A'
         },
         {
+          "elo_rating": 1200,
+          "elo_rating_attacker": 1200,
+          "elo_rating_defender": 1200,
           "email": 'example.cb2@email.com',
           "first_name": 'C',
           "last_name": 'B'
         },
         {
+          "elo_rating": 1200,
+          "elo_rating_attacker": 1200,
+          "elo_rating_defender": 1200,
           "email": 'example.bw1@email.com',
           "first_name": 'B',
           "last_name": 'W'
         },
         {
+          "elo_rating": 1200,
+          "elo_rating_attacker": 1200,
+          "elo_rating_defender": 1200,
           "email": 'example.ca1@email.com',
           "first_name": 'C',
           "last_name": 'A'
         },
         {
+          "elo_rating": 1200,
+          "elo_rating_attacker": 1200,
+          "elo_rating_defender": 1200,
           "email": 'example.ck1@email.com',
           "first_name": 'C',
           "last_name": 'K'

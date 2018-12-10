@@ -23,6 +23,9 @@ import { GroupsProvider } from '../providers/groups/groups';
 import { TournamentsProvider } from '../providers/tournaments/tournaments';
 import { TournamentsPage } from '../pages/tournaments/tournaments';
 import { TournamentsPageModule } from '../pages/tournaments/tournaments.module';
+import { RankingPage } from '../pages/ranking/ranking';
+import { RankingPageModule } from '../pages/ranking/ranking.module';
+import { UserInfoComponent } from '../components/user-info/user-info';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { TournamentsPageModule } from '../pages/tournaments/tournaments.module';
     GameListPageModule,
     GroupsPageModule,
     TournamentsPageModule,
+    RankingPageModule,
     UserDetailPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -48,7 +52,9 @@ import { TournamentsPageModule } from '../pages/tournaments/tournaments.module';
     GamePage,
     GameListPage,
     GroupsPage,
-    TournamentsPage
+    TournamentsPage,
+    RankingPage,
+    UserInfoComponent
   ],
   providers: [
     StatusBar,

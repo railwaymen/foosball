@@ -1,0 +1,40 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Ranking</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    [(ngModel)]="userNameInput"
+    (ionInput)="filterUsers()"
+    placeholder="Search for users">
+  </ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let user of filteredUsers; let i = index" (tap)="presentUserInfoModal(user.id)">
+      <div>
+        <h2>{{search ? '' : i + 1}} {{user.name()}}</h2>
+        <p>ELO {{user.elo_rating}}</p>
+      </div>
+      <div>
+        <p *ngIf="hasHigherElo(user)">Best as:</p>
+        <ion-icon *ngIf="hasDefenderHigherElo(user)" name="body"></ion-icon>
+        <ion-icon *ngIf="hasAttackerHigherElo(user)" name="football"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

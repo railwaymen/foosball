@@ -4,7 +4,10 @@ import { UserModel } from '../../models/user-model';
 export interface IUser {
   firstName: string,
   id: number,
-  lastName: string
+  lastName: string,
+  elo_rating?: number,
+  elo_rating_defender?: number,
+  elo_rating_attacker?: number
 }
 export interface IUserPlayer extends IUser {
   position: string,
