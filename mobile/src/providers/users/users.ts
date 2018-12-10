@@ -23,7 +23,7 @@ export class UsersProvider {
           this.data = [];
           for (const row of data) {
             this.data.push(
-              new UserModel(row.id, row.first_name, row.last_name)
+              new UserModel(row.id, row.first_name, row.last_name, row.elo_rating, row.elo_rating_defender, row.elo_rating_attacker)
             );
           }
           resolve(this.data);

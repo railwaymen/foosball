@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { GameListPage } from '../pages/game-list/game-list';
 import { TournamentsPage } from '../pages/tournaments/tournaments';
+import { RankingPage } from '../pages/ranking/ranking';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,6 +36,11 @@ export class MyApp {
 
   public openTournamentsPage(): void {
     this.nav.setRoot(TournamentsPage);
+    this.menuCtrl.close();
+  }
+
+  public openRankingPage(): void {
+    this.nav.setRoot(RankingPage);
     this.menuCtrl.close();
   }
 }
