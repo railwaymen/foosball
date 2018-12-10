@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :games_player do
-    gols { 5 }
-    own_gols { 1 }
+    goals { 5 }
+    own_goals { 1 }
     position { 'attaker' }
     team { 'red' }
 

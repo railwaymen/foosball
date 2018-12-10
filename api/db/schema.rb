@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_30_095058) do
+ActiveRecord::Schema.define(version: 2018_12_06_094855) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "api_keys", force: :cascade do |t|
     t.string "client_id", null: false
@@ -20,10 +23,10 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.integer "red_attacker_id", null: false
-    t.integer "red_defender_id", null: false
-    t.integer "blue_attacker_id", null: false
-    t.integer "blue_defender_id", null: false
+    t.bigint "red_attacker_id", null: false
+    t.bigint "red_defender_id", null: false
+    t.bigint "blue_attacker_id", null: false
+    t.bigint "blue_defender_id", null: false
     t.integer "red_score", null: false
     t.integer "blue_score", null: false
     t.datetime "created_at", null: false
@@ -39,12 +42,12 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
   end
 
   create_table "games_players", force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "game_id", null: false
+    t.bigint "player_id", null: false
+    t.bigint "game_id", null: false
     t.string "team", null: false
     t.string "position", null: false
-    t.integer "gols", null: false
-    t.integer "own_gols", null: false
+    t.integer "goals", null: false
+    t.integer "own_goals", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_games_players_on_game_id"
@@ -52,7 +55,7 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.integer "tournament_id", null: false
+    t.bigint "tournament_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -61,8 +64,8 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
   end
 
   create_table "groups_teams", force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "group_id", null: false
+    t.bigint "team_id", null: false
+    t.bigint "group_id", null: false
     t.integer "points", default: 0, null: false
     t.integer "goal_difference", default: 0, null: false
     t.integer "goals_against", default: 0, null: false
@@ -87,19 +90,19 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
   end
 
   create_table "teams", force: :cascade do |t|
-    t.integer "tournament_id", null: false
+    t.bigint "tournament_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "attacker_id"
-    t.integer "defender_id"
+    t.bigint "attacker_id"
+    t.bigint "defender_id"
     t.index ["attacker_id"], name: "index_teams_on_attacker_id"
     t.index ["defender_id"], name: "index_teams_on_defender_id"
     t.index ["tournament_id"], name: "index_teams_on_tournament_id"
   end
 
   create_table "tournament_players", force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "tournament_id", null: false
+    t.bigint "player_id", null: false
+    t.bigint "tournament_id", null: false
     t.string "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -114,4 +117,16 @@ ActiveRecord::Schema.define(version: 2018_11_30_095058) do
     t.string "name", null: false
   end
 
+  add_foreign_key "games", "players", column: "blue_attacker_id"
+  add_foreign_key "games", "players", column: "blue_defender_id"
+  add_foreign_key "games", "players", column: "red_attacker_id"
+  add_foreign_key "games", "players", column: "red_defender_id"
+  add_foreign_key "groups", "tournaments"
+  add_foreign_key "groups_teams", "groups"
+  add_foreign_key "groups_teams", "teams"
+  add_foreign_key "teams", "players", column: "attacker_id"
+  add_foreign_key "teams", "players", column: "defender_id"
+  add_foreign_key "teams", "tournaments"
+  add_foreign_key "tournament_players", "players"
+  add_foreign_key "tournament_players", "tournaments"
 end

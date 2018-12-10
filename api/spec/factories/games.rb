@@ -15,13 +15,13 @@ FactoryBot.define do
     trait :with_games_players do
       after :build do |record|
         FactoryBot.create :games_player, game: record, player: record.red_attacker, position: 'attaker', team: 'red',
-                                         gols: 5, own_gols: 0
+                                         goals: 5, own_goals: 0
         FactoryBot.create :games_player, game: record, player: record.red_defender, position: 'defender', team: 'red',
-                                         gols: 5, own_gols: 0
+                                         goals: 5, own_goals: 0
         FactoryBot.create :games_player, game: record, player: record.blue_attacker, position: 'attaker', team: 'blue',
-                                         gols: 4, own_gols: 0
+                                         goals: 4, own_goals: 0
         FactoryBot.create :games_player, game: record, player: record.blue_defender, position: 'defender', team: 'blue',
-                                         gols: 4, own_gols: 0
+                                         goals: 4, own_goals: 0
       end
     end
   end
