@@ -18,7 +18,7 @@ export class GamesProvider {
 
    public async save(params: IGame): Promise<{}> {
     return new Promise((resolve, reject) => {
-      this.http.post(`${this.endpoint}`, params)
+      this.http.post(`${this.endpoint}`, { games: params })
         .subscribe((data) => {
           resolve(data);
         }, err => reject(err));
