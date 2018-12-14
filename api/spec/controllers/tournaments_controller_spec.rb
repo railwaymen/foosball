@@ -41,4 +41,27 @@ RSpec.describe TournamentsController, type: :controller do
       ].to_json)
     end
   end
+
+  describe 'PUT #create' do
+    it 'returns http 401 when missing token' do
+      put :create, format: :json, params: { tournament: nil }
+      expect(response).to have_http_status(401)
+    end
+
+    it 'returns http 401 when expired token' do
+      exired_http_login
+      put :create, format: :json, params: { tournament: nil }
+      expect(response).to have_http_status(401)
+    end
+
+    it 'creates game' do
+      params = attributes_for(:tournament)
+
+      http_login
+      put :create, format: :json, params: { tournament: params }
+      expect(response).to have_http_status(200)
+
+      expect(Tournament.count).to eq(1)
+    end
+  end
 end

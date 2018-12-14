@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>New tournament</ion-title>
+  </ion-navbar>
+</ion-header>
+
+ <ion-content>
+   <ion-grid text-center>
+    <ion-row>
+      <form col-12 (ngSubmit)="saveTournament()">
+          <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="tournament.name" name="Name"></ion-input>
+          </ion-item>
+          <button ion-button type="Save" block>Save tournament</button>
+        </form>
+    </ion-row>
+  </ion-grid>
+</ion-content>

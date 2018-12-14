@@ -4,6 +4,7 @@ import { NavController, LoadingController, AlertController, Refresher } from 'io
 import { TournamentsProvider } from '../../providers/tournaments/tournaments';
 import { ITournament } from './tournaments.interface';
 import { GroupsPage } from '../groups/groups';
+import { TournamentFormPage } from '../tournament-form/tournament-form';
 @Component({
   selector: 'page-tournaments',
   templateUrl: 'tournaments.html',
@@ -54,5 +55,9 @@ export class TournamentsPage {
   }
   public showGroups(tournament : ITournament) : void {
     this.navCtrl.push(GroupsPage, { tournament: tournament });
+  }
+
+  public showForm() : void {
+    this.navCtrl.push(TournamentFormPage);
   }
 }
