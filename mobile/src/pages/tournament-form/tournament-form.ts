@@ -13,7 +13,7 @@ export class TournamentFormPage {
   public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private readonly alertCtrl: AlertController, public tournamentsProvider: TournamentsProvider) {
   }
 
-  public presentAlert() {
+  public presentAlert() : void {
     this.alertCtrl.create({
       title: 'Oops',
       subTitle: 'Something went wrong',
@@ -21,7 +21,7 @@ export class TournamentFormPage {
     }).present();
   }
 
-  public saveTournament() {
+  public saveTournament() : void {
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
