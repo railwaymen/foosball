@@ -22,7 +22,7 @@ export class UsersProvider {
           for (const row of data as Array<IUserApi>) {
 
             this._data.push(
-              new UserModel(row.id, row.first_name, row.last_name)
+              new UserModel(row.id, row.first_name, row.last_name, row.elo_rating, row.elo_rating_attacker, row.elo_rating_defender)
             );
           }
           resolve(this._data);
