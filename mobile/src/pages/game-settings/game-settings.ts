@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, reorderArray } from 'ionic-angular';
 import { UserModel } from 'models/user-model';
-import { ReorderIndexes } from 'ionic-angular/umd/components/item/item-reorder';
 
 @IonicPage()
 @Component({
@@ -17,7 +16,7 @@ export class GameSettingsPage {
   public constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.players = this.navParams.get('players');
   }
-  public reorderItems(indexes: ReorderIndexes): void {
+  public reorderItems(indexes: { from: number, to: number }): void {
     this.players = reorderArray(this.players, indexes);
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].team = i < 2 ? 'blue' : 'red';
