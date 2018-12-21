@@ -22,6 +22,8 @@ import { GroupsProvider } from '../providers/groups/groups';
 import { TournamentsProvider } from '../providers/tournaments/tournaments';
 import { TournamentsPage } from '../pages/tournaments/tournaments';
 import { TournamentsPageModule } from '../pages/tournaments/tournaments.module';
+import { TournamentFormPage } from '../pages/tournament-form/tournament-form';
+import { TournamentFormPageModule } from '../pages/tournament-form/tournament-form.module';
 import { RankingPage } from '../pages/ranking/ranking';
 import { RankingPageModule } from '../pages/ranking/ranking.module';
 import { UserInfoComponent } from '../components/user-info/user-info';
@@ -41,6 +43,7 @@ import { TokenInterceptor } from '../auth/token.interceptor';
     GroupsPageModule,
     TournamentsPageModule,
     RankingPageModule,
+    TournamentFormPageModule,
     UserDetailPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -55,7 +58,8 @@ import { TokenInterceptor } from '../auth/token.interceptor';
     GroupsPage,
     TournamentsPage,
     RankingPage,
-    UserInfoComponent
+    UserInfoComponent,
+    TournamentsPage
   ],
   providers: [
     AuthService,
