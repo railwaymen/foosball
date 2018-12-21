@@ -1,0 +1,71 @@
+page-game-settings {
+  .shirt-blue{
+    color: #4040ea;
+  }
+  .shirt-red{
+    color: #ec5a5a;
+  }
+  .player-placeholder {
+    display: flex;
+    justify-content: center;
+    height: 120px;
+    width: 100%;
+    .name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      &.name-blue, &.name-red {
+        opacity: 0.75;
+      }
+      &.name-blue ion-label {
+        color: color(team-blue);
+      }
+      &.name-red ion-label {
+        color: color(team-red);
+      }
+      ion-label {
+        margin: 0;
+      }
+      ion-item {
+        display: inline;
+      }
+      ion-reorder {
+        display: none;
+      }
+      .item-inner {
+        border: none;
+
+        .label {
+          font-size: 30px;
+          font-weight: 700;
+        }
+      }
+    }
+    .shirt-red, .shirt-blue {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: none;
+      left: 0;
+      top: 160px;
+      bottom: 0;
+      right: 40px;
+      &:before {
+        transition: color .9s ease;
+        font-size: 450px;
+      }
+    }
+    ion-icon:not(.shirt-blue, .shirt-red) {
+      height: 100%;
+      top: 0;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      opacity: 0.5;
+      &:before {
+        font-size: 56px;
+      }
+    }
+  }
+}
