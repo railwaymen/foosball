@@ -17,7 +17,10 @@ export interface IUserPlayer extends IUser {
 export interface IUserApi {
   id: number,
   first_name: string,
-  last_name: string
+  last_name: string,
+  elo_rating: number,
+  elo_rating_defender: number,
+  elo_rating_attacker: number
 }
 export interface IPlayerData {
   team: 'blue' | 'red',
