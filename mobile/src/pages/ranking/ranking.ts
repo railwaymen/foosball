@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Refresher, ModalController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { UserModel } from '../../models/user-model';
-import {  Dictionary } from 'lodash';
 import _ from 'lodash';
 import { UserInfoComponent } from '../../components/user-info/user-info';
 import { IUser } from '../game/game.interfaces';
