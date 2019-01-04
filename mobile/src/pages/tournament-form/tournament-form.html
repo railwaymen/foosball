@@ -7,9 +7,16 @@
   </ion-navbar>
 </ion-header>
 
- <ion-content>
-   <ion-grid text-center>
+<ion-content>
+  <ion-grid text-center>
     <ion-row>
+      <ion-col col-12>
+        <h1>
+          {{message()}}
+        </h1>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="shouldShowSave()">
       <form col-12 (ngSubmit)="saveTournament()">
           <ion-item>
             <ion-label>Name</ion-label>
@@ -17,6 +24,28 @@
           </ion-item>
           <button ion-button type="Save" block>Save tournament</button>
         </form>
+    </ion-row>
+
+    <ion-row *ngIf="showSubmit()">
+      <ion-col col-12><button ion-button (click)="submit()" block>{{submitText()}}</button></ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="shouldShowBack()">
+      <ion-col col-12>
+        <button ion-button (click)="unSubmit()" block>Back</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-4 *ngFor="let user of filteredUsers()" (tap)="onUserTap(user)">
+        <ion-card>
+            <ion-card-content>
+              {{user.name()}}
+            </ion-card-content>
+            <ion-icon *ngIf="isDefender(user)" name="body"></ion-icon>
+            <ion-icon *ngIf="isAttacker(user)" name="football"></ion-icon>
+          </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

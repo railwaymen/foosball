@@ -55,12 +55,23 @@ RSpec.describe TournamentsController, type: :controller do
     end
 
     it 'creates game' do
-      params = attributes_for(:tournament)
+      additional_params = { attackers: (1..4).map(&:to_s), defenders: (1..4).map(&:to_s) }
+      params = attributes_for(:tournament).merge(additional_params)
 
       http_login
-      put :create, format: :json, params: { tournament: params }
-      expect(response).to have_http_status(200)
+      tournament_service_double = double
+      allow(PrepareTournamentService).to receive(:new) { tournament_service_double }
+      allow(tournament_service_double).to receive(:call)
 
+      put :create, format: :json, params: { tournament: params }
+
+      expect(response).to have_http_status(200)
+      expect(PrepareTournamentService).to have_received(:new).with(
+        tournament: Tournament.last,
+        attacker_ids: additional_params[:attackers],
+        defender_ids: additional_params[:defenders]
+      )
+      expect(tournament_service_double).to have_received(:call)
       expect(Tournament.count).to eq(1)
     end
   end

@@ -6,7 +6,14 @@ class TournamentsController < ApplicationController
   end
 
   def create
-    @tournament = Tournament.create(tournament_params)
+    @tournament = Tournament.new(tournament_params)
+    if @tournament.save
+      PrepareTournamentService.new(
+        tournament: @tournament,
+        defender_ids: params.dig(:tournament, :defenders) || [],
+        attacker_ids: params.dig(:tournament, :attackers) || []
+      ).call
+    end
     respond_with @tournament
   end
 

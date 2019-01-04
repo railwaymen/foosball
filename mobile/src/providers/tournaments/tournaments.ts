@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserModel } from '../../models/user-model';
 import { TournamentModel } from '../../models/tournament-model';
 import { ITournamentFields } from '../../pages/tournaments/tournaments.interface';
 import { ENV } from '@app/env';
@@ -14,9 +15,12 @@ export class TournamentsProvider {
     this.endpoint = `${ENV.API_URL}/tournaments.json`;
   }
 
-  public async save({ name }: ITournamentFields): Promise<{}> {
+  public async save({ name }: ITournamentFields, defenders: Array<UserModel>, attackers: Array<UserModel>): Promise<{}> {
+    const defenderIds = defenders.map(defender => defender.id);
+    const attackerIds = attackers.map(attacker => attacker.id);
+
     return new Promise((resolve, reject) => {
-      this.http.post(`${this.endpoint}`, { tournament: { name } })
+      this.http.post(`${this.endpoint}`, { tournament: { name, defenders: defenderIds, attackers: attackerIds } })
         .subscribe((data) => {
           resolve(data);
         }, err => reject(err));
