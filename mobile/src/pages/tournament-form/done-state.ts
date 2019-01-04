@@ -10,7 +10,7 @@ export default class DoneState implements ITournamentFormState {
   public unSubmit() : ITournamentFormState {
     return new AttackersState() as ITournamentFormState;
   }
-  public showBack() : boolean {
+  public shouldShowBack() : boolean {
     return true;
   }
 
@@ -29,7 +29,7 @@ export default class DoneState implements ITournamentFormState {
   public message() : string {
     return 'Submit form';
   }
-  public showSave() : boolean {
+  public shouldShowSave() : boolean {
     return true;
   }
 }

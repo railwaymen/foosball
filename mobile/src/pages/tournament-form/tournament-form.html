@@ -16,7 +16,7 @@
         </h1>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="showSave()">
+    <ion-row *ngIf="shouldShowSave()">
       <form col-12 (ngSubmit)="saveTournament()">
           <ion-item>
             <ion-label>Name</ion-label>
@@ -30,7 +30,7 @@
       <ion-col col-12><button ion-button (click)="submit()" block>{{submitText()}}</button></ion-col>
     </ion-row>
 
-    <ion-row *ngIf="showBack()">
+    <ion-row *ngIf="shouldShowBack()">
       <ion-col col-12>
         <button ion-button (click)="unSubmit()" block>Back</button>
       </ion-col>

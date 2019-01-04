@@ -93,8 +93,8 @@ export class TournamentFormPage {
     return this.state.shouldShowUser(this, user);
   }
 
-  public showBack() : boolean {
-    return this.state.showBack();
+  public shouldShowBack() : boolean {
+    return this.state.shouldShowBack();
   }
 
   public unSubmit() : void {
@@ -113,8 +113,8 @@ export class TournamentFormPage {
     this.state = this.state.submit();
   }
 
-  public showSave() : boolean {
-    return this.state.showSave();
+  public shouldShowSave() : boolean {
+    return this.state.shouldShowSave();
   }
 
   public async fetchUsers(): Promise<void> {

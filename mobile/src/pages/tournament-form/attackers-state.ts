@@ -14,7 +14,7 @@ export default class AttackersState implements ITournamentFormState {
   public unSubmit() : ITournamentFormState {
     return new DefendersState() as ITournamentFormState;
   }
-  public showBack() : boolean {
+  public shouldShowBack() : boolean {
     return true;
   }
   public showSubmit(component : TournamentFormPage) : boolean {
@@ -32,7 +32,7 @@ export default class AttackersState implements ITournamentFormState {
   public message() : string {
     return 'Choose attackers';
   }
-  public showSave() : boolean {
+  public shouldShowSave() : boolean {
     return false;
   }
 }

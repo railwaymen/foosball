@@ -4,9 +4,9 @@ import { UserModel } from '../../models/user-model';
 export interface ITournamentFormState {
   onUserTap(component : TournamentFormPage, user: UserModel) : void;
   unSubmit() : ITournamentFormState;
-  showBack() : boolean;
+  shouldShowBack() : boolean;
   shouldShowUser(component : TournamentFormPage, user : UserModel) : boolean;
-  showSave() : boolean;
+  shouldShowSave() : boolean;
   showSubmit(component : TournamentFormPage) : boolean;
   submit() : ITournamentFormState;
   submitText() : string;

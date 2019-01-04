@@ -13,7 +13,7 @@ export default class DefendersState implements ITournamentFormState {
   public unSubmit() : ITournamentFormState {
     return this as ITournamentFormState;
   }
-  public showBack() : boolean {
+  public shouldShowBack() : boolean {
     return false;
   }
   public shouldShowUser(component : TournamentFormPage, user : UserModel) : boolean {
@@ -31,7 +31,7 @@ export default class DefendersState implements ITournamentFormState {
   public message() : string {
     return 'Choose defenders';
   }
-  public showSave() : boolean {
+  public shouldShowSave() : boolean {
     return false;
   }
 }
