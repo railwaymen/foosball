@@ -10,15 +10,15 @@
       Selected: {{playerSize()}}
     </ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (touchstart)="openGameSettings()">Settings</button>
       <button class="start-game-button" *ngIf="isTeamCompleted()" ion-button icon-only (touchstart)="play()">Play<ion-icon name="play"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
-      pullingIcon="arrow-dropdown"
+      pullingIcon="football"
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
       refreshingText="Refreshing...">

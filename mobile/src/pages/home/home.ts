@@ -1,16 +1,16 @@
 import { Dictionary } from 'underscore';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, Refresher } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, Refresher, NavParams } from 'ionic-angular';
 import { GamePage } from '../game/game';
 import { UsersProvider } from '../../providers/users/users';
-
 import _ from 'lodash';
 import { UserModel } from '../../models/user-model';
+import { GameSettingsPage } from '../game-settings/game-settings';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [UsersProvider]
+  providers: [UsersProvider],
 })
 export class HomePage {
 
@@ -19,7 +19,7 @@ export class HomePage {
   public teams: Array<'blue' | 'red'> = [];
   public positions: Array<'defender' | 'attacker'> = [];
 
-  public constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private readonly alertCtrl: AlertController, public usersProvider: UsersProvider) {
+  public constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, private readonly alertCtrl: AlertController, public usersProvider: UsersProvider) {
     this.players = [];
     const loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -50,6 +50,10 @@ export class HomePage {
     });
   }
 
+  public openGameSettings(): void {
+    this.navCtrl.push(GameSettingsPage, { players: this.players });
+  }
+
   public presentAlert(): void {
     const alert = this.alertCtrl.create({
       title: 'Oops',
@@ -61,6 +65,7 @@ export class HomePage {
 
   public ionViewWillEnter(): void{
     this.resetTeams();
+    this.players = this.navParams.get('players') || [];
   }
 
   public async loadUsers(): Promise<{}> {

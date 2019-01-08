@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>GameSettings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-item-group class="selected-players-wrapper" [reorder]="true" (ionItemReorder)="reorderItems($event)">
+        <ion-item class="player-placeholder" (ionItemReorder)="reorderItems($event)" *ngFor="let player of players">
+          <ion-item class="name" [ngClass]="{'name-blue' : (player.team === 'blue'), 'name-red':(player.team === 'red')}">{{player.lastName}}</ion-item>
+          <ion-icon *ngIf="isPlayer(player)" name="shirt" [ngClass]="{'shirt-blue' : (player.team === 'blue'), 'shirt-red':(player.team === 'red')}"></ion-icon>
+          <ion-icon *ngIf="isDefender(player)" name="body"></ion-icon>
+          <ion-icon *ngIf="isAttacker(player)" name="football"></ion-icon>
+        </ion-item>
+      </ion-item-group>
+</ion-content>

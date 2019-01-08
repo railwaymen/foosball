@@ -5,7 +5,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
@@ -29,6 +28,8 @@ import { RankingPageModule } from '../pages/ranking/ranking.module';
 import { UserInfoComponent } from '../components/user-info/user-info';
 import { AuthService } from '../auth/auth.service';
 import { TokenInterceptor } from '../auth/token.interceptor';
+import { GameSettingsPage } from '../pages/game-settings/game-settings';
+import { GameSettingsPageModule } from '../pages/game-settings/game-settings.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { TokenInterceptor } from '../auth/token.interceptor';
     RankingPageModule,
     TournamentFormPageModule,
     UserDetailPageModule,
+    GameSettingsPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -59,7 +61,8 @@ import { TokenInterceptor } from '../auth/token.interceptor';
     TournamentsPage,
     RankingPage,
     UserInfoComponent,
-    TournamentsPage
+    TournamentsPage,
+    GameSettingsPage
   ],
   providers: [
     AuthService,

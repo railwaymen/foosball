@@ -49,7 +49,7 @@ export class GamesProvider {
           if (infiniteScroll) {
             infiniteScroll.complete();
           }
-          if (this.data.length === 0) {
+          if (!this.data.length && infiniteScroll) {
             infiniteScroll.enable(false);
           }
 
